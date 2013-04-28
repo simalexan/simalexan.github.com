@@ -7,20 +7,6 @@ tagline: & seeing what it can do
 
 This will probably be my blogging platform for the new blog, I just need somethings checked
 
-## Check more
-
-In `_config.yml` remember to specify your own data:
-    
-    title : My Blog =)
-    
-      author :
-      name : Name Lastname
-      email : blah@email.test
-      github : username
-      twitter : username
-
-The theme should reference these variables whenever needed.
-    
 ## Posts
 
 This blog contains sample posts which help stage pages and blog data.
