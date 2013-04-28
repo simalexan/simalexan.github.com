@@ -1,21 +1,19 @@
 ---
 layout: page
-title: Hello World!
-tagline: Supporting tagline
+title: Testing Jekyll Bootstrap!
+tagline: & seeing what it can do
 ---
 {% include JB/setup %}
 
-Read [Jekyll Quick Start](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)
+This will probably be my blogging platform for the new blog, I just need somethings checked
 
-Complete usage and documentation available at: [Jekyll Bootstrap](http://jekyllbootstrap.com)
-
-## Update Author Attributes
+## Check more
 
 In `_config.yml` remember to specify your own data:
     
     title : My Blog =)
     
-    author :
+      author :
       name : Name Lastname
       email : blah@email.test
       github : username
@@ -40,7 +38,6 @@ Here's a sample "posts list".
 
 ## To-Do
 
-This theme is still unfinished. If you'd like to be added as a contributor, [please fork](http://github.com/plusjade/jekyll-bootstrap)!
-We need to clean up the themes, make theme usage guides with theme-specific markup examples.
+- Do a lot of things, but only after I finish the side projects
 
 
