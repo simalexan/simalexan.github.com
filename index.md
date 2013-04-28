@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Testing Jekyll Bootstrap!
+title: Testing Jekyll!
 tagline: & seeing what it can do
 ---
 {% include JB/setup %}
@@ -9,12 +9,7 @@ This will probably be my blogging platform for the new blog, I just need somethi
 
 ## Posts
 
-This blog contains sample posts which help stage pages and blog data.
-When you don't need the samples anymore just delete the `_posts/core-samples` folder.
-
-    $ rm -rf _posts/core-samples
-
-Here's a sample "posts list".
+Here's a "posts list".
 
 <ul class="posts">
   {% for post in site.posts %}
