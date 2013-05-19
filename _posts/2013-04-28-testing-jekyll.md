@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Testing Jekyll"
-description: ""
+description: "Testing description my friend"
 category: 
 tags: []
 ---
