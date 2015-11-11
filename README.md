@@ -1,6 +1,6 @@
-# Simalexan
+# simalexan
 
-Personal blog using Jekyll
+Personal blog using Metalsmith
 
 - basic setup
 - will write down a few post subjects
@@ -8,8 +8,4 @@ Personal blog using Jekyll
 ##Themes
 
 - JavaScript
-- Angular.js
-- Node.js
-- Ember.js
-- Python
-- and of course a little Ruby
+- Swift

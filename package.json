@@ -1,0 +1,26 @@
+{
+  "name": "simalexan.github.io",
+  "version": "1.0.0",
+  "description": "personal site",
+  "main": "bin/build.js",
+  "scripts": {
+    "build": "./bin/build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simalexan/simalexan.github.com.git"
+  },
+  "author": "simalexan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simalexan/simalexan.github.com/issues"
+  },
+  "homepage": "https://github.com/simalexan/simalexan.github.com",
+  "devDependencies": {
+    "handlebars": "^4.0.4",
+    "metalsmith": "^2.1.0",
+    "metalsmith-layouts": "^1.4.2",
+    "metalsmith-markdown": "^0.2.1"
+  }
+}
