@@ -2,12 +2,12 @@ var GiftButton = (function(window, undefined) {
 
   var secure = window.location.protocol === 'https:';
   var apiLocation = 'https' + '@@apiLocation';
-  var serverLocation = 'http://10.5.50.239:9000';
-  var cisApiLocation = 'https://preprod-cis.giftconnect.com';
+  var serverLocation = 'https://simalexan.github.io';
+  var cisApiLocation = 'http://preprod-cis.giftconnect.com';
   var dashboardLocation = 'http:/preprod-app.giftconnect.com';
   var psApiLocation = 'https://preprod-ps.giftconnect.com/v1';
   var trackingApiLocation = 'https://preprod-ps.giftconnect.com/v1';
-  var serverPath = '/dist';
+  var serverPath = '/gbtn';
   var jsPath = '';
   var cssFile = 'gbtn.min.css';
   var cssPath = '/css/' +  cssFile;
@@ -72,7 +72,7 @@ var GiftButton = (function(window, undefined) {
 
           GiftButton.gbSnag = Bugsnag.noConflict();
           GiftButton.gbSnag.apiKey = '5148ebbc874795d81d0ff61c9982ac9a';
-          GiftButton.gbSnag.releaseStage = 'local';
+          GiftButton.gbSnag.releaseStage = 'sima-v2';
           GiftButton.gbSnag.beforeNotify = function(payload) {
             var match = payload.file.match(/gbtn\.js|jq\.js|jq-ea\.js/i);
             return !!(match && match[0].length > 0);
