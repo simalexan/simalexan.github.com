@@ -1,0 +1,66 @@
+
+<div class="gButton-box">
+  <section class="gButton-banner-module">
+    <img class="gButton-close" src="@@serverUrl/img/close.png" alt="" onclick="GiftButton.closeGiftModal()">
+    <div class="gButton-overlay"></div>
+    <div class="gButton-explainer-component">
+      <h1 class="gButton-main-headline">@@modalExplainer <br><span> @@giftName</span></h1>
+    </div>
+    <div class="gButton-logo-component text-center"><img src="@@logoUrl" alt="" width="100px"></div>
+
+    <div class="gButton-congradulations-module">
+      <img class="gButton-congratulations-icon" src="@@serverUrl/img/gift-icon.svg" alt="">
+      <h1 class="gButton-main-headline">@@modalCongratulationsGreatGiftCode</h1>
+      <h3 id="gButton-congratulations-instructions"></h3>
+      <a class="gButton-to-email" onclick="GiftButton.openRedeemLink()">@@modalCongratulationsClickToRedeem</a>
+      <a class="gButton-resend-email" href=""></a>
+    </div>
+  </section>
+
+  <section class="gButton-form-module">
+    <form action="">
+      <div class="gButton-progress-component"></div>
+      <div class="gButton-input-wrapper active">
+        <h2 class="gButton-form-headline">@@modalEmailFormHeadline</h2>
+        <input class="gButton-email-input" type="email" placeholder="myemail@email.com">
+        <button class="gButton-next-step">@@modalNavigationNext</button>
+        <div class="gButton-error-msg invalid-email">@@modalEmailFormInvalidEmail</div>
+        <div class="gButton-error-msg gifted-email">@@modalEmailFormGiftedEmail</div>
+        <div class="gButton-navigation gButton-navigation-continue">
+          @@modalNavigationContinue
+          <img class="gButton-continue-icon" src="@@serverUrl/img/continue.svg" alt="">
+        </div>
+      </div>
+
+      <div class="gButton-input-wrapper">
+        <h2 class="gButton-form-headline">@@modalGenderFormHeadline</h2>
+        <div class="gender-select cf">
+          <a class="gButton-gender-choice gButton-boy" href="#" data-gender="male"></a>
+          <a class="gButton-gender-choice gButton-girl" href="#" data-gender="female"></a>
+          <a class="gButton-gender-choice gButton-other" href="#" data-gender="other">@@modalGenderFormOther</a>
+        </div>
+        <div class="gButton-navigation gButton-navigation-back" onclick="GiftButton.goBack()">
+            <img class="gButton-back-icon" src="@@serverUrl/img/back.svg" alt="">
+          @@modalNavigationBack
+         </div>
+      </div>
+
+      <div class="gButton-input-wrapper">
+        <h2 class="gButton-form-headline">@@modalAgeFormHeadline</h2>
+        <ul class="gButton-age-select">
+          <li>12-17</li>
+          <li>18-24</li>
+          <li>25-34</li>
+          <li>35-54</li>
+          <li>55+</li>
+        </ul>
+        <div class="gButton-navigation gButton-navigation-back" onclick="GiftButton.goBack()">
+          <img class="gButton-back-icon" src="@@serverUrl/img/back.svg" alt="">
+          @@modalNavigationBack
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
+
+<div class="gButton-popup-overlay" onclick="GiftButton.closeGiftModal()"></div>

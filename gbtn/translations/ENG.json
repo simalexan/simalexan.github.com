@@ -1,0 +1,45 @@
+{
+  "buttonHoverText": {
+    "large": "Celebrate the day <br> with a gift from us to you!",
+    "medium": "Gift Me!",
+    "small": "Gift Me!"
+  },
+  "modal": {
+    "navigation": {
+      "back": "Back",
+      "next": "next",
+      "continue": "Continue",
+      "ok": "OK"
+    },
+    "explainer": "We are giving away",
+    "issuingError": "There was a problem sending your gift",
+    "noCodesError": "There are no more gifts available for this promotion",
+    "emailForm":{
+      "headline": "Where should we send your gift code?",
+      "invalidEmail": "Oops! Please try a valid email",
+      "giftedEmail": "Oops! Looks like that email has already been used.",
+      "noGifts": "There are no more gifts available for this promotion"
+    },
+    "genderForm":{
+      "headline": "Please select your gender",
+      "other": "Other"
+    },
+    "ageForm": {
+      "headline": "How old are you?"
+    },
+    "congratulations": {
+      "headline": "You’ve been gifted!",
+      "instructions": "Instructions for picking up your gift <br> have been sent to your email.",
+      "takeMeToMyEmail": "Take me to my email",
+      "wantMoreGifts": "I want more gifts!",
+      "greatGiftCode": "Great! Your gift code is",
+      "clickToRedeem": "Click To Redeem",
+      "getMoreGifts": "Get More Gifts",
+      "resend": "Resend Email",
+      "sorryHeadline": "Sorry but you are too late",
+      "errorHeadline": "something went wrong",
+      "errorText":"This one is totally on us.<br> Sorry for the inconvenience.",
+      "retry":"Retry"
+    }
+  }
+}

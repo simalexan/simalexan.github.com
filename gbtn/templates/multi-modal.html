@@ -1,0 +1,41 @@
+
+<div class="gButton-box gButton-multi-box">
+  <img class="gButton-close" src="@@serverUrl/img/close.png" alt="" onclick="GiftButton.closeGiftModal()">
+  <section class="gButton-nav">
+    <div class="gButton-prev-arrow" onclick="GiftButton.previousGift()"><img src="@@serverUrl/img/prev-arrow.svg" ></div>
+    <div class="gButton-multi-logo-component text-center"><img src="@@logoUrl" alt=""></div>
+    <div class="gButton-next-arrow" onclick="GiftButton.nextGift()"><img src="@@serverUrl/img/next-arrow.svg" ></div>
+  </section>
+  <section class="gButton-music-module"></section>
+  <section class="gButton-banner-module">
+    <div class="gButton-overlay"></div>
+    <div class="gButton-explainer-component">
+      <h1 class="gButton-main-headline">@@modalExplainer <br><span>@@giftName</span></h1>
+    </div>
+
+    <div class="gButton-congradulations-module">
+      <img class="gButton-congratulations-icon" src="@@serverUrl/img/gift-icon.svg" alt="">
+      <h1 class="gButton-main-headline">@@modalCongratulationsGreatGiftCode</h1>
+      <h3 id="gButton-congratulations-instructions"></h3>
+      <a class="gButton-to-email" onclick="GiftButton.openRedeemLink()">@@modalCongratulationsClickToRedeem</a>
+      <a class="gButton-resend-email" onclick="GiftButton.getMoreGifts()">@@modalCongratulationsGetMoreGifts</a>
+    </div>
+  </section>
+
+  <section class="gButton-form-module">
+    <form onsubmit="return false;">
+      <div class="gButton-input-wrapper cf active">
+        <input class="gButton-email-input" type="email" placeholder="Enter email"
+               onkeyup="GiftButton.keyUpEmailInput(event)"
+               onfocus="GiftButton.emailInputFocus(event)"
+               onblur="GiftButton.emailInputBlur(event)"/>
+        <a href="" class="gButton-get-gift">Get The Gift</a>
+        <div class="gButton-error-msg invalid-email">@@modalEmailFormInvalidEmail</div>
+        <div class="gButton-error-msg gifted-email">@@modalEmailFormGiftedEmail</div>
+        <div class="gButton-error-msg no-gifts">@@modalEmailFormNoGifts</div>
+      </div>
+    </form>
+  </section>
+</div>
+
+<div class="gButton-popup-overlay" onclick="GiftButton.closeGiftModal()"></div>

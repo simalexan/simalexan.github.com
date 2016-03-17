@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="60px" height="58px" viewBox="0 0 60 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.3 (16618) - http://www.bohemiancoding.com/sketch -->
+    <title>gift icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M0,7.0159463e-15 L30.4961063,16.5390614 L59.9756757,0 L60,34.8284314 L0.0969340522,34.8284314 L0,7.0159463e-15 Z"></path>
+        <path id="path-3" d="M60,21.8921569 L0,21.8921569 L28.0516364,0.610486871 C29.1327273,-0.204711068 30.8814545,-0.202626163 31.9538182,0.611529324 L60,21.8921569 Z"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD" sketch:type="MSArtboardGroup" transform="translate(-1106.000000, -766.000000)">
+            <g id="gift-icon" sketch:type="MSLayerGroup" transform="translate(1106.000000, 766.000000)">
+                <path d="M9,27.8627451 L9,16.9166667 L0,22.8872549 L9,27.8627451 Z" id="left-side" fill="#69868B" sketch:type="MSShapeGroup"></path>
+                <path d="M9,19.9019608 L2,23.8823529 L9,27.8627451 L9,19.9019608 Z" id="side-shadow-left" opacity="0.2" fill="#000000" sketch:type="MSShapeGroup"></path>
+                <path d="M60,27.8627451 L60,16.9166667 L51,22.8872549 L60,27.8627451 Z" id="right-side" fill="#69868B" sketch:type="MSShapeGroup" transform="translate(55.500000, 22.389706) scale(-1, 1) translate(-55.500000, -22.389706) "></path>
+                <path d="M58,19.9019608 L51,23.8823529 L58,27.8627451 L58,19.9019608 Z" id="side-shadow-right" opacity="0.2" fill="#000000" sketch:type="MSShapeGroup" transform="translate(54.500000, 23.882353) scale(-1, 1) translate(-54.500000, -23.882353) "></path>
+                <rect id="box" fill="#E5CA6B" sketch:type="MSShapeGroup" x="9" y="16.9166667" width="42" height="25.872549"></rect>
+                <path d="M43.5536958,0 C40.1499359,0 35.9003933,2.71860784 34.2305424,3.88784804 C33.5606477,4.35753431 31.3750756,5.93376961 29.9994571,7.49706863 C28.6292674,5.94272549 26.440438,4.36051961 25.7694576,3.88983824 C24.0996067,2.71860784 19.8489783,3.03814708e-16 16.4452185,3.03814708e-16 C15.0728572,3.03814708e-16 13.9219847,0.416946078 13.0251727,1.23790196 C10.813543,3.25894608 10.957945,7.06420098 11.0350317,9.11012255 C11.0448033,9.35790196 11.0914896,9.73504412 11.1664049,9.95098039 L48.8325094,9.95098039 C48.9085104,9.73504412 48.954111,9.38476961 48.9649683,9.11012255 C49.042055,7.06519608 49.186457,3.25894608 46.9748273,1.23790196 C46.0769296,0.416946078 44.926057,0 43.5536958,0 L43.5536958,0 Z" id="bow" fill="#F94F48" sketch:type="MSShapeGroup"></path>
+                <rect id="top-shadow" opacity="0.07" fill="#000000" sketch:type="MSShapeGroup" x="9" y="16.9166667" width="42" height="1.99019608"></rect>
+                <rect id="box-top" fill="#F5DB7D" sketch:type="MSShapeGroup" x="6" y="9.95098039" width="48" height="6.96568627"></rect>
+                <rect id="ribbon-stripe" fill="#F94F48" sketch:type="MSShapeGroup" x="27" y="9.95098039" width="6" height="31.8431373"></rect>
+                <path d="M0,22.8854929 L3,20.8952367 L30,36.4280952 L57,20.8952367 L60,22.8872549 L60,54.7303922 L0.0969340522,54.7303922 L0,22.8854929 Z" id="envelope-shadow" opacity="0.07" fill="#000000" sketch:type="MSShapeGroup"></path>
+                <path d="M31.9538182,33.4497646 L60,54.7303922 L0,54.7303922 L28.0516364,33.4487222 C29.1327273,32.6335242 30.8814545,32.6356091 31.9538182,33.4497646 L31.9538182,33.4497646 Z" id="front-shadow2" opacity="0.07" fill="#000000" sketch:type="MSShapeGroup"></path>
+                <path d="M27.3364887,6.72779786 C28.2842238,5.76651526 31.8580722,5.67098407 32.7007628,6.72779786 C33.2014751,7.35472129 32.9225235,9.95098039 33,9.95098039 L27,9.95098039 C27.0867161,9.95098039 26.7739168,7.29799965 27.3364887,6.72779786 Z" id="ribbon-center" fill="#D6262F" sketch:type="MSShapeGroup"></path>
+                <g id="envelope-+-Path-+-Path-Copy-2" transform="translate(0.000000, 23.029412)">
+                    <mask id="mask-2" sketch:name="Mask" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#1DA187" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                    <polygon id="Star-1-Copy" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-2)" points="45 21.5367647 42.2290124 22.986418 42.7582239 19.9160031 40.5164479 17.7415232 43.6145062 17.2935557 45 14.5 46.3854938 17.2935557 49.4835521 17.7415232 47.2417761 19.9160031 47.7709876 22.986418 "></polygon>
+                    <polygon id="Star-1-Copy-7" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-2)" points="61.2857143 13.0073529 58.5147267 14.4570062 59.0439382 11.3865913 56.8021621 9.21211145 59.9002205 8.76414396 61.2857143 5.97058824 62.6712081 8.76414396 65.7692664 9.21211145 63.5274904 11.3865913 64.0567019 14.4570062 "></polygon>
+                    <polygon id="Star-1-Copy-3" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-2)" points="37.2857143 30.9191176 34.5147267 32.3687709 35.0439382 29.298356 32.8021621 27.1238762 35.9002205 26.6759087 37.2857143 23.8823529 38.6712081 26.6759087 41.7692664 27.1238762 39.5274904 29.298356 40.0567019 32.3687709 "></polygon>
+                    <polygon id="Star-1-Copy-2" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-2)" points="9.85714286 27.5073529 7.08615524 28.9570062 7.61536678 25.8865913 5.37359071 23.7121115 8.47164905 23.264144 9.85714286 20.4705882 11.2426367 23.264144 14.340695 23.7121115 12.0989189 25.8865913 12.6281305 28.9570062 "></polygon>
+                    <polygon id="Star-1-Copy-5" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-2)" points="2.14285714 12.1544118 -0.628130475 13.604065 -0.0989189313 10.5336502 -2.34069501 8.35917028 0.757363334 7.91120279 2.14285714 5.11764706 3.52835095 7.91120279 6.62640929 8.35917028 4.38463322 10.5336502 4.91384476 13.604065 "></polygon>
+                    <polygon id="Star-1-Copy-6" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-2)" points="21 13.0073529 18.2290124 14.4570062 18.7582239 11.3865913 16.5164479 9.21211145 19.6145062 8.76414396 21 5.97058824 22.3854938 8.76414396 25.4835521 9.21211145 23.2417761 11.3865913 23.7709876 14.4570062 "></polygon>
+                </g>
+                <path d="M35.9505083,36.3662075 L59.9978328,54.6126183 L59.9999537,57.6493464 L0.0967494159,57.6493464 L0.0881173785,54.547853 L24.3870817,36.1131873 L30.4961063,39.4263163 L35.9505083,36.3662075 Z" id="front-shadow" opacity="0.07" fill="#000000" sketch:type="MSShapeGroup"></path>
+                <g id="envelope-front-+-Path-Copy" transform="translate(0.000000, 35.823529)">
+                    <mask id="mask-4" sketch:name="Mask" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Mask" fill="#22BD9A" sketch:type="MSShapeGroup" xlink:href="#path-3"></use>
+                    <polygon id="Star-1-Copy" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-4)" points="30.4285714 12.1544118 27.6575838 13.604065 28.1867954 10.5336502 25.9450193 8.35917028 29.0430776 7.91120279 30.4285714 5.11764706 31.8140652 7.91120279 34.9121236 8.35917028 32.6703475 10.5336502 33.199559 13.604065 "></polygon>
+                    <polygon id="Star-1-Copy-2" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-4)" points="20.1428571 23.2426471 17.3718695 24.6923003 17.9010811 21.6218855 15.659305 19.4474056 18.7573633 18.9994381 20.1428571 16.2058824 21.528351 18.9994381 24.6264093 19.4474056 22.3846332 21.6218855 22.9138448 24.6923003 "></polygon>
+                    <polygon id="Star-1-Copy-4" opacity="0.395347481" fill="#FFFFFF" sketch:type="MSShapeGroup" mask="url(#mask-4)" points="49.2857143 19.8308824 46.5147267 21.2805356 47.0439382 18.2101207 44.8021621 16.0356409 47.9002205 15.5876734 49.2857143 12.7941176 50.6712081 15.5876734 53.7692664 16.0356409 51.5274904 18.2101207 52.0567019 21.2805356 "></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

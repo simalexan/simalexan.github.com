@@ -1,0 +1,45 @@
+{
+  "buttonHoverText": {
+    "large": "Wir haben <br> ein Geschenk  für Sie!",
+    "medium": "Überraschung!",
+    "small": "Überraschung!"
+  },
+  "modal": {
+    "navigation": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "continue": "Weiter",
+      "ok": "OK"
+    },
+    "explainer": "Wir verschenken",
+    "issuingError": "Eine problem mit deine Geschenk",
+    "noCodesError": "There are no more gifts available for this promotion",
+    "emailForm":{
+      "headline": "An welche Emailadresse können wir Ihren Geschenk-Code senden?",
+      "invalidEmail": "Huch! Ist das Ihre korrekte Emailadresse?",
+      "giftedEmail": "Huch, diese Emailadresse wurde bereits verwendet.",
+      "noGifts": "There are no more gifts available for this promotion"
+    },
+    "genderForm":{
+      "headline": "Sind Sie männlich oder weiblich",
+      "other": "Weitere"
+    },
+    "ageForm": {
+      "headline": "Wie alt sind Sie?"
+    },
+    "congratulations": {
+      "headline": "Ihr Geschenk-Code ist unterwegs!",
+      "instructions": "Einlöse-Infos finden Sie in <br> Ihrem Emailpostfach.",
+      "takeMeToMyEmail": "Emailpostfach öffnen",
+      "wantMoreGifts": "I want more gifts!",
+      "greatGiftCode": "Great! Your gift code is",
+      "clickToRedeem": "Click To Redeem",
+      "getMoreGifts": "Get More Gifts",
+      "resend": "Email erneut senden",
+      "sorryHeadline": "Sorry but you are too late",
+      "errorHeadline": "ein fehler ist aufgetreten",
+      "errorText": "Huch, dieser Fehler geht auf unsere Kappe. <br> Entschuldigung!",
+      "retry": "Noch einmal probieren"
+    }
+  }
+}

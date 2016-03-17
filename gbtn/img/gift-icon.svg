@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="60px" height="58px" viewBox="0 0 60 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>Gift</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Buttons" sketch:type="MSArtboardGroup" transform="translate(-75.000000, -79.000000)">
+            <g id="Big-Button" sketch:type="MSLayerGroup" transform="translate(75.000000, 79.000000)">
+                <g id="Gift" sketch:type="MSShapeGroup">
+                    <path d="M9,28 L9,17 L0,23 L9,28 Z" id="left-side" fill="#69868B"></path>
+                    <path d="M9,20 L2,24 L9,28 L9,20 Z" id="side-shadow-left" opacity="0.2" fill="#000000"></path>
+                    <path d="M60,28 L60,17 L51,23 L60,28 Z" id="right-side" fill="#69868B" transform="translate(55.500000, 22.500000) scale(-1, 1) translate(-55.500000, -22.500000) "></path>
+                    <path d="M58,20 L51,24 L58,28 L58,20 Z" id="side-shadow-right" opacity="0.2" fill="#000000" transform="translate(54.500000, 24.000000) scale(-1, 1) translate(-54.500000, -24.000000) "></path>
+                    <rect id="box" fill="#E5CA6B" x="9" y="17" width="42" height="26"></rect>
+                    <path d="M43.5536958,0 C40.1499359,0 35.9003933,2.732 34.2305424,3.907 C33.5606477,4.379 31.3750756,5.963 29.9994571,7.534 C28.6292674,5.972 26.440438,4.382 25.7694576,3.909 C24.0996067,2.732 19.8489783,3.05311332e-16 16.4452185,3.05311332e-16 C15.0728572,3.05311332e-16 13.9219847,0.419 13.0251727,1.244 C10.813543,3.275 10.957945,7.099 11.0350317,9.155 C11.0448033,9.404 11.0914896,9.783 11.1664049,10 L48.8325094,10 C48.9085104,9.783 48.954111,9.431 48.9649683,9.155 C49.042055,7.1 49.186457,3.275 46.9748273,1.244 C46.0769296,0.419 44.926057,0 43.5536958,0 L43.5536958,0 Z" id="bow" fill="#F94F48"></path>
+                    <rect id="top-shadow" opacity="0.07" fill="#000000" x="9" y="17" width="42" height="2"></rect>
+                    <rect id="box-top" fill="#F5DB7D" x="6" y="10" width="48" height="7"></rect>
+                    <rect id="ribbon-stripe" fill="#F94F48" x="27" y="10" width="6" height="32"></rect>
+                    <path d="M0,22.9982293 L3,20.9981689 L30,36.6075439 L57,20.9981689 L60,23 L60,55 L0.0969340522,55 L0,22.9982293 Z" id="envelope-shadow" opacity="0.07" fill="#000000"></path>
+                    <path d="M31.9538182,33.6145418 L60,55 L0,55 L28.0516364,33.6134942 C29.1327273,32.7942805 30.8814545,32.7963757 31.9538182,33.6145418 L31.9538182,33.6145418 Z" id="front-shadow2" opacity="0.07" fill="#000000"></path>
+                    <path d="M27.3364887,6.76093972 C28.2842238,5.79492174 31.8580722,5.69891996 32.7007628,6.76093972 C33.2014751,7.39095145 32.9225235,10 33,10 L27,10 C27.0867161,10 26.7739168,7.33395038 27.3364887,6.76093972 Z" id="ribbon-center" fill="#D6262F"></path>
+                    <path d="M0,23 L30.4961063,39.6205346 L59.9756757,23 L60,58 L0.0969340522,58 L0,23 Z" id="envelope" fill="#89DBC4"></path>
+                    <path d="M35.9505083,36.5453513 L59.9978328,54.8816459 L59.9999537,57.9333333 L0.0967494159,57.9333333 L0.0881173785,54.8165616 L24.3870817,36.2910848 L30.4961063,39.6205346 L35.9505083,36.5453513 Z" id="front-shadow" opacity="0.07" fill="#000000"></path>
+                    <path d="M60,58 L0,58 L28.0516364,36.6134942 C29.1327273,35.7942805 30.8814545,35.7963757 31.9538182,36.6145418 L60,58 Z" id="envelope-front" fill="#ABEBD9"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
