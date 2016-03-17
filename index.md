@@ -9,20 +9,17 @@ tagline: & seeing what it can do
 ## To-Do
 
 - Do a lot of things
-
 <div data-gift-button></div>
 
 <script>
-		var GiftButton = GiftButton || {};
-		(function() {
-			var script = document.createElement('script');
-			script.async = true;
-			var secure = window.location.protocol === 'https:';
-			script.src = (secure ? 'https' : 'http') +
-				'://dev-app2.platform.giftconnect.com/gbtn/gbtn.js?uuid=abed7782-66f9-447d-a730-e49e6f8b3f93';
-			var entry = document.getElementsByTagName('script')[0];
-			entry.parentNode.insertBefore(script, entry);
-		})();
-	</script>
+  var GiftButton = GiftButton || {};
+  (function() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://preprod-ps.giftconnect.com/gbtn/gbtn.js?uuid=05b0e0dc-543c-4647-bf61-b89e5fa9d396';
+    var entry = document.getElementsByTagName('script')[0];
+    entry.parentNode.insertBefore(script, entry);
+  })();
+</script>
 
 
