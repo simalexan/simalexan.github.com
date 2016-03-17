@@ -5,10 +5,10 @@ tagline: & seeing what it can do
 ---
 {% include JB/setup %}
 
+<div style="text-align: center;">
+<h3>Aleksandar Simovic</h3>
+</div>
 
-## To-Do
-
-- Do a lot of things
 <div data-gift-button></div>
 
 <script>
