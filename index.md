@@ -16,7 +16,7 @@ tagline: & seeing what it can do
   (function() {
     var script = document.createElement('script');
     script.async = true;
-    script.src = 'http://simalexan.github.com/gbtn/gbtn.js?uuid=05b0e0dc-543c-4647-bf61-b89e5fa9d396';
+    script.src = 'https://simalexan.github.io/gbtn/gbtn.js?uuid=05b0e0dc-543c-4647-bf61-b89e5fa9d396';
     var entry = document.getElementsByTagName('script')[0];
     entry.parentNode.insertBefore(script, entry);
   })();
