@@ -466,7 +466,7 @@ var GiftButton = (function(window, undefined) {
       GiftButton.$('.gButton-side-box').addClass('active');
       for (var i=0; i<GiftButton.promotions.length; i++){
         var promo = GiftButton.promotions[i];
-        GiftButton.$('.gButton-list-content ul').append('<li>'+promo.giftName+'</li>');
+        GiftButton.$('.gButton-list-content ul').append('<li><h4>'+promo.giftName+'</h4><div><img src="'+promo.giftImageUrl+'" width="80%"/></div></li>');
       }
     }, '.gButton-side-box');
   };
