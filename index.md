@@ -26,4 +26,9 @@ tagline: & seeing what it can do
   })();
 </script>
 
-
+<script type="application/javascript">
+	function invokeMe(){
+		var email = $('#customerEmail').val();
+		_gcGBCustomInvoke('Here we would show a custom message', email);
+	}
+</script>
