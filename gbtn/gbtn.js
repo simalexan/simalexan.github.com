@@ -2,7 +2,7 @@ var GiftButton = (function(window, undefined) {
 
   var secure = window.location.protocol === 'https:';
   var apiLocation = 'https' + '@@apiLocation';
-  var serverLocation = 'https://preprod-ps.giftconnect.com';
+  var serverLocation = 'https://simalexan.github.com';
   var cisApiLocation = 'http://preprod-cis.giftconnect.com';
   var dashboardLocation = 'http:/preprod-app.giftconnect.com';
   var psApiLocation = 'https://preprod-ps.giftconnect.com/v1';
@@ -232,7 +232,7 @@ var GiftButton = (function(window, undefined) {
       GiftButton.locale = data.locale || 'ENG';
       GiftButton.ctaText = data.ctaText || '';
       GiftButton.thankYouMessage = data.thankYouMessage || 'Thank you for signing up!';
-      GiftButton.thankYouEvent = data.thankYouEvent || 'LEAVE';
+      //GiftButton.thankYouEvent = data.thankYouEvent || 'LEAVE';
       GiftButton.hasThankYou = GiftButton.thankYouMessage.length > 1 && GiftButton.thankYouEvent.length > 1;
       GiftButton.numShowThankYou = data.numShowThankYou || 1;
 
@@ -1069,6 +1069,7 @@ var GiftButton = (function(window, undefined) {
   loadSupportingFiles(function() {
     var params = getButtonParams();
     GiftButton.uuid = params.uuid; // uuid
+    GiftButton.thankYouEvent = params.t; // uuid
 
     getGiftBoxData(function (hasError){
       if (hasError) {
