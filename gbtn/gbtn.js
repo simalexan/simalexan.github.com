@@ -3,7 +3,7 @@ var GiftButton = (function(window, undefined) {
   var secure = window.location.protocol === 'https:';
   var apiLocation = 'https' + '@@apiLocation';
   var serverLocation = 'https://simalexan.github.io';
-  var cisApiLocation = 'http://preprod-cis.giftconnect.com';
+  var cisApiLocation = 'https://preprod-cis.giftconnect.com';
   var dashboardLocation = 'http:/preprod-app.giftconnect.com';
   var psApiLocation = 'https://preprod-ps.giftconnect.com/v1';
   var trackingApiLocation = 'https://preprod-ps.giftconnect.com/v1';
@@ -474,7 +474,9 @@ var GiftButton = (function(window, undefined) {
           }
         });
         break;
-      case 'custom':
+      case 'CUSTOM':
+        break;
+      case 'CUSTOM-EMAIL':
         break;
       default:
         break;
@@ -496,9 +498,13 @@ var GiftButton = (function(window, undefined) {
     }
   };
 
-  GiftButton.invokeGCModal = function (thankYouMessage){
+  GiftButton.invokeGCModal = function (thankYouMessage, email){
+
     if (thankYouMessage){
       GiftButton.thankYouMessage = thankYouMessage.toString();
+    }
+    if(GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && email.length > 0){
+      GiftButton.inputtedEmail = email;
     }
     GiftButton.openGiftModal();
   };
@@ -523,6 +529,10 @@ var GiftButton = (function(window, undefined) {
       if (window.matchMedia("(max-width: 500px)").matches) {
         var scrollPos = window.scrollY + 40;
         GiftButton.$('.gButton-box').css('top', scrollPos+'px');
+      }
+
+      if(GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && email.length > 0){
+        GiftButton.$('.gButton-email-input').val(GiftButton.inputtedEmail);
       }
 
       setTimeout(function (){
@@ -1090,8 +1100,12 @@ var GiftButton = (function(window, undefined) {
 
 
 function _gcGBCustomInvoke(){
-  if (arguments.length == 1 && typeof arguments[0] == 'string'){
+  if (GiftButton.thankYouEvent == 'CUSTOM' && arguments.length == 1
+    && typeof arguments[0] == 'string'){
     GiftButton.invokeGCModal(arguments[0]);
+  } else if (GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && arguments.length == 1
+    && typeof arguments[0] == 'string' && typeof arguments[1] == 'string'){
+    GiftButton.invokeGCModal(arguments[0], arguments[1]);
   } else {
     GiftButton.invokeGCModal();
   }
