@@ -2,12 +2,12 @@ var GiftButton = (function(window, undefined) {
 
   var secure = window.location.protocol === 'https:';
   var apiLocation = 'https' + '@@apiLocation';
-  var serverLocation = 'https://simalexan.github.io';
-  var cisApiLocation = 'http://preprod-cis.giftconnect.com';
+  var serverLocation = 'http://localhost:9000';
+  var cisApiLocation = 'https://preprod-cis.giftconnect.com';
   var dashboardLocation = 'http:/preprod-app.giftconnect.com';
   var psApiLocation = 'https://preprod-ps.giftconnect.com/v1';
   var trackingApiLocation = 'https://preprod-ps.giftconnect.com/v1';
-  var serverPath = '/gbtn';
+  var serverPath = '/dist';
   var jsPath = '';
   var cssFile = 'gbtn.min.css';
   var cssPath = '/css/' +  cssFile;
@@ -36,7 +36,7 @@ var GiftButton = (function(window, undefined) {
     cookie: null,
     bannerModule: null,
     checker: null,
-    isOpen: false
+    ctaText: ''
   };
 
   function loadScript(url, callback) {
@@ -72,7 +72,7 @@ var GiftButton = (function(window, undefined) {
 
           GiftButton.gbSnag = Bugsnag.noConflict();
           GiftButton.gbSnag.apiKey = '5148ebbc874795d81d0ff61c9982ac9a';
-          GiftButton.gbSnag.releaseStage = 'sima-v2';
+          GiftButton.gbSnag.releaseStage = 'local-v2-preproduction';
           GiftButton.gbSnag.beforeNotify = function(payload) {
             var match = payload.file.match(/gbtn\.js|jq\.js|jq-ea\.js/i);
             return !!(match && match[0].length > 0);
@@ -147,14 +147,15 @@ var GiftButton = (function(window, undefined) {
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
+        var response;
         if (request.responseText == 'OK') {
           callback(null, {});
           return;
         }
-        var response = request.responseText ? JSON.parse(request.responseText) : {};
+        response = request.responseText ? JSON.parse(request.responseText) : {};
         callback(null, response);
       } else {
-        var response = request.responseText ? JSON.parse(request.responseText) : request.response;
+        response = request.responseText ? JSON.parse(request.responseText) : request.response;
         callback(response, null);
       }
     };
@@ -212,7 +213,8 @@ var GiftButton = (function(window, undefined) {
    * @param callback
    */
   function getGiftBoxData(callback){
-    xhRequest('GET', psApiLocation + '/giftboxes/'+GiftButton.uuid, null, function (error, data){
+    var gbURL = window.location.href;
+    xhRequest('GET', psApiLocation + '/giftboxes/'+GiftButton.uuid +'?gbURL='+gbURL, null, function (error, data){
       var hasError = !!error || data.status == 'inactive';
       if (hasError){
         callback(hasError);
@@ -228,6 +230,11 @@ var GiftButton = (function(window, undefined) {
       GiftButton.hasLogo = !!data.hasLogo;  // hasLogo
       GiftButton.externalUrl = data.externalUrl; // externalUrl
       GiftButton.locale = data.locale || 'ENG';
+      GiftButton.ctaText = data.ctaText || '';
+      GiftButton.thankYouMessage = data.thankYouMessage || 'Thank you for signing up!';
+      GiftButton.thankYouEvent = data.thankYouEvent || 'LEAVE';
+      GiftButton.hasThankYou = GiftButton.thankYouMessage.length > 1 && GiftButton.thankYouEvent.length > 1;
+      GiftButton.numShowThankYou = data.numShowThankYou || 1;
 
       callback();
     });
@@ -313,6 +320,12 @@ var GiftButton = (function(window, undefined) {
   }
 
   function insertButtonProperTranslation(markup, callback){
+    if (GiftButton.ctaText.length > 1){
+      var ctaMarkup = markup.toString()
+        .replace(/@@buttonHoverTextLarge/g, GiftButton.ctaText);
+      callback(ctaMarkup);
+    }
+
     loadHTMLFile(serverLocation + serverPath +'/translations/'+GiftButton.locale+'.json', function (translationData){
       var translations = JSON.parse(translationData);
       GiftButton.translations = translations;
@@ -327,6 +340,7 @@ var GiftButton = (function(window, undefined) {
   function insertModalProperTranslation(markup){
     var translations = GiftButton.translations;
     return markup.toString()
+      .replace(/@@thankYouMessage/g, GiftButton.thankYouMessage)
       .replace(/@@modalNavigationBack/g, translations['modal']['navigation']['back'])
       .replace(/@@modalNavigationContinue/g, translations['modal']['navigation']['continue'])
       .replace(/@@modalNavigationNext/g, translations['modal']['navigation']['next'])
@@ -366,7 +380,7 @@ var GiftButton = (function(window, undefined) {
 
   function loadModalMarkup(callback){
 
-    var modalTemplateType = 'side-modal';//GiftButton.promotions.length > 1 ? 'multi-modal' : 'modal';
+    var modalTemplateType = GiftButton.promotions.length > 1 ? 'multi-modal' : 'modal';
     loadHTMLFile(serverLocation + serverPath +'/templates/' + modalTemplateType + '.html', function (htmlData){
 
       if (!GiftButton.hasLogo) {
@@ -398,38 +412,37 @@ var GiftButton = (function(window, undefined) {
     });
   }
 
-  /**
-   *
-   * @param callback
-   * @param [elmClass]
-   */
-  function appendModalMarkup(callback, elmClass){
+  function appendModalMarkup(callback){
     loadModalMarkup(function (modalMarkup){
-      if(elmClass) GiftButton.$(elmClass).html(modalMarkup);
-      else GiftButton.$('#gift-me').after(modalMarkup);
+      GiftButton.$('#gift-me').after(modalMarkup);
       callback();
     });
   }
 
   function renderButton(){
     var btnTmplUrl = serverLocation + serverPath +  '/templates/';
-    switch(GiftButton.size) {
-      case 'LARGE':
-        btnTmplUrl += 'button-side.html';
-        break;
-      case 'MEDIUM':
-        btnTmplUrl += 'button-m.html';
-        break;
-      case 'SMALL':
-        btnTmplUrl += 'button-s.html';
-        break;
-      case 'SIDE':
-        btnTmplUrl += 'button-side.html';
-        break;
-      default:
-        btnTmplUrl += 'button-side.html';
-        break;
+    if (GiftButton.hasThankYou){
+      btnTmplUrl += 'button-1px.html';
+    } else {
+      switch(GiftButton.size) {
+        case 'LARGE':
+          btnTmplUrl += 'button-l.html';
+          break;
+        case 'MEDIUM':
+          btnTmplUrl += 'button-m.html';
+          break;
+        case 'SMALL':
+          btnTmplUrl += 'button-s.html';
+          break;
+        case 'SIDE':
+          btnTmplUrl += 'button-side.html';
+          break;
+        default:
+          btnTmplUrl += 'button-l.html';
+          break;
+      }
     }
+
 
     loadHTMLFile(btnTmplUrl, function (htmlData){
       var markup = htmlData.toString()
@@ -442,34 +455,54 @@ var GiftButton = (function(window, undefined) {
     });
   }
 
-  GiftButton.toggleGiftModal = function (){
-    GiftButton.isOpen = !GiftButton.isOpen;
-    if (GiftButton.isOpen) {
-      GiftButton.hideSideModal();
-      return;
+  function setUpThankYou(){
+    switch(GiftButton.thankYouEvent){
+      case 'SCROLL':
+        addEvent(document, 'scroll', function(evt) {
+          if (evt.toElement == null && evt.relatedTarget == null) {
+            if (document.body.scrollHeight == document.body.scrollTop + window.innerHeight) {
+              GiftButton.handleScrollBottom();
+            }
+
+          }
+        });
+        break;
+      case 'LEAVE':
+        addEvent(document, 'mouseout', function(evt) {
+          if (evt.toElement == null && evt.relatedTarget == null) {
+            GiftButton.handleWindowLeave();
+          }
+        });
+        break;
+      case 'custom':
+        break;
+      default:
+        break;
     }
-    GiftButton.showSideModal();
+  }
+
+  GiftButton.handleScrollBottom = function(){
+    if (GiftButton.numShowThankYou > 0){
+      GiftButton.numShowThankYou--;
+      GiftButton.openGiftModal();
+    }
+
   };
 
-  GiftButton.hideSideModal = function (){
-    GiftButton.$('.gButton-side-box').removeClass('active');
-    var elms = GiftButton.$('.gButton-list-content');
-    elms.remove();
+  GiftButton.handleWindowLeave = function (){
+    if (GiftButton.numShowThankYou > 0) {
+      GiftButton.numShowThankYou--;
+      GiftButton.openGiftModal();
+    }
   };
 
-  GiftButton.showSideModal = function (callback){
-    GiftButton.promotions = GiftButton.copy(GiftButton.pms);
-    GiftButton.$('html').addClass('gButton-body');
-    trackButtonClick();
-
-    appendModalMarkup(function (){
-      GiftButton.$('.gButton-side-box').addClass('active');
-      for (var i=0; i<GiftButton.promotions.length; i++){
-        var promo = GiftButton.promotions[i];
-        GiftButton.$('.gButton-list-content ul').append('<li><h4>'+promo.giftName+'</h4><div><img src="'+promo.giftImageUrl+'" width="80%"/></div></li>');
-      }
-    }, '.gButton-side-box');
+  GiftButton.invokeGCModal = function (thankYouMessage){
+    if (thankYouMessage){
+      GiftButton.thankYouMessage = thankYouMessage.toString();
+    }
+    GiftButton.openGiftModal();
   };
+
 
   GiftButton.openGiftModal = function (){
     GiftButton.promotions = GiftButton.copy(GiftButton.pms);
@@ -497,6 +530,14 @@ var GiftButton = (function(window, undefined) {
           GiftButton.$('.gButton-email-input').focus();
         }
       }, 100);
+
+      if(GiftButton.hasThankYou){
+        setTimeout(function (){
+          GiftButton.$('.gButton-thankyou-module').addClass('remove-from-view');
+        }, 2800);
+      } else {
+        GiftButton.$('.gButton-thankyou-module').hide();
+      }
     });
 
   };
@@ -1035,6 +1076,9 @@ var GiftButton = (function(window, undefined) {
         return;
       }
 
+      if (GiftButton.hasThankYou){
+        setUpThankYou();
+      }
       renderButton();
       trackButtonImpression();
     });
@@ -1042,3 +1086,12 @@ var GiftButton = (function(window, undefined) {
 
   return GiftButton;
 })(window);
+
+
+function _gcGBCustomInvoke(){
+  if (arguments.length == 1 && typeof arguments[0] == 'string'){
+    GiftButton.invokeGCModal(arguments[0]);
+  } else {
+    GiftButton.invokeGCModal();
+  }
+}

@@ -13,23 +13,27 @@
       <h1 class="gButton-main-headline">@@modalCongratulationsGreatGiftCode</h1>
       <h3 id="gButton-congratulations-instructions"></h3>
       <a class="gButton-to-email" onclick="GiftButton.openRedeemLink()">@@modalCongratulationsClickToRedeem</a>
-      <a class="gButton-resend-email" href=""></a>
+      <a class="gButton-resend-email" onclick="GiftButton.getMoreGifts()">@@modalCongratulationsGetMoreGifts</a>
     </div>
   </section>
 
   <section class="gButton-form-module">
-    <form action="">
+    <form onsubmit="return false;">
       <div class="gButton-progress-component"></div>
-      <div class="gButton-input-wrapper active">
-        <h2 class="gButton-form-headline">@@modalEmailFormHeadline</h2>
-        <input class="gButton-email-input" type="email" placeholder="myemail@email.com">
-        <button class="gButton-next-step">@@modalNavigationNext</button>
+      <div class="gButton-input-wrapper cf active">
+        <input class="gButton-email-input" type="email" placeholder="Enter email"
+               onkeyup="GiftButton.keyUpEmailInput(event)"
+               onfocus="GiftButton.emailInputFocus(event)"
+               onblur="GiftButton.emailInputBlur(event)">
+        <!-- <button class="gButton-next-step">@@modalNavigationNext</button> -->
+        <a href="" class="gButton-get-gift">Get The Gift</a>
         <div class="gButton-error-msg invalid-email">@@modalEmailFormInvalidEmail</div>
         <div class="gButton-error-msg gifted-email">@@modalEmailFormGiftedEmail</div>
-        <div class="gButton-navigation gButton-navigation-continue">
+        <div class="gButton-error-msg no-gifts">@@modalEmailFormNoGifts</div>
+        <!-- <div class="gButton-navigation gButton-navigation-continue">
           @@modalNavigationContinue
           <img class="gButton-continue-icon" src="@@serverUrl/img/continue.svg" alt="">
-        </div>
+        </div> -->
       </div>
 
       <div class="gButton-input-wrapper">
