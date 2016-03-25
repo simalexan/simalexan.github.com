@@ -28,7 +28,7 @@ tagline: & seeing what it can do
 
 <script type="application/javascript">
 	function invokeMe(){
-		var email = $('#customerEmail').val();
+		var email = GiftButton.$('#customerEmail').val();
 		_gcGBCustomInvoke('Here we would show a custom message', email);
 	}
 </script>
