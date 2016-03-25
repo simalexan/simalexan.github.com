@@ -10,6 +10,7 @@ tagline: & seeing what it can do
 </div>
 
 <input id="customerEmail" value="" placeholder="Type in an email" style="height: 25px; width: 200px;">
+<input id="customMessage" value="" placeholder="Type in a message" style="height: 25px; width: 200px;">
 <button onclick="invokeMe()" style="border: none; width: 100px; height:35px; background-color: dark-gray; color: white;">Test the custom event</button>
 
 <div data-gift-button></div>
@@ -29,6 +30,7 @@ tagline: & seeing what it can do
 <script type="application/javascript">
 	function invokeMe(){
 		var email = GiftButton.$('#customerEmail').val();
-		_gcGBCustomInvoke('Here we would show a custom message', email);
+		var msg = GiftButton.$('#customMessage').val() || 'Here we would show a custom message';
+		_gcGBCustomInvoke(msg, email);
 	}
 </script>
