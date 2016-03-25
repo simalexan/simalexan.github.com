@@ -1103,7 +1103,7 @@ function _gcGBCustomInvoke(){
   if (GiftButton.thankYouEvent == 'CUSTOM' && arguments.length == 1
     && typeof arguments[0] == 'string'){
     GiftButton.invokeGCModal(arguments[0]);
-  } else if (GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && arguments.length == 1
+  } else if (GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && arguments.length == 2
     && typeof arguments[0] == 'string' && typeof arguments[1] == 'string'){
     GiftButton.invokeGCModal(arguments[0], arguments[1]);
   } else {
