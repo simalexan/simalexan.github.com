@@ -72,7 +72,7 @@ var GiftButton = (function(window, undefined) {
 
           GiftButton.gbSnag = Bugsnag.noConflict();
           GiftButton.gbSnag.apiKey = '5148ebbc874795d81d0ff61c9982ac9a';
-          GiftButton.gbSnag.releaseStage = 'preprod-v2';
+          GiftButton.gbSnag.releaseStage = 'demo-v2-preprod';
           GiftButton.gbSnag.beforeNotify = function(payload) {
             var match = payload.file.match(/gbtn\.js|jq\.js|jq-ea\.js/i);
             return !!(match && match[0].length > 0);
@@ -233,7 +233,7 @@ var GiftButton = (function(window, undefined) {
       GiftButton.ctaText = data.ctaText || '';
       GiftButton.thankYouMessage = data.thankYouMessage || 'Thank you for signing up!';
       //GiftButton.thankYouEvent = data.thankYouEvent || 'LEAVE';
-      GiftButton.hasThankYou = GiftButton.thankYouMessage.length > 1 && GiftButton.thankYouEvent && GiftButton.thankYouEvent.length > 1;
+      GiftButton.hasThankYou = GiftButton.thankYouMessage.length > 1 && GiftButton.thankYouEvent.length > 1;
       GiftButton.numShowThankYou = data.numShowThankYou || 1;
 
       callback();
