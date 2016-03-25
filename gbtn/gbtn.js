@@ -2,7 +2,7 @@ var GiftButton = (function(window, undefined) {
 
   var secure = window.location.protocol === 'https:';
   var apiLocation = 'https' + '@@apiLocation';
-  var serverLocation = 'https://simalexan.github.com';
+  var serverLocation = 'https://simalexan.github.io';
   var cisApiLocation = 'http://preprod-cis.giftconnect.com';
   var dashboardLocation = 'http:/preprod-app.giftconnect.com';
   var psApiLocation = 'https://preprod-ps.giftconnect.com/v1';
