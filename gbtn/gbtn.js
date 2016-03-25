@@ -531,7 +531,7 @@ var GiftButton = (function(window, undefined) {
         GiftButton.$('.gButton-box').css('top', scrollPos+'px');
       }
 
-      if(GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && email.length > 0){
+      if(GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && GiftButton.inputtedEmail.length > 0){
         GiftButton.$('.gButton-email-input').val(GiftButton.inputtedEmail);
       }
 
