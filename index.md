@@ -18,10 +18,10 @@ tagline: & seeing what it can do
   
   <div style="margin-bottom: 15px;">
     <textarea id="customMessage" value="" placeholder="Type in the gbox message" 
-    style="height: 100px; width: 250px; border-radius: 4px; background-color:#0E4A6D; border: 2px solid #073554; color: #77A8CF; font-size: 16px;"></textarea>
+    style="height: 100px; width: 250px; border-radius: 4px; background-color:#0E4A6D; border: 2px solid #073554; color: #77A8CF; font-size: 16px; resize: none;"></textarea>
   </div>
 
-  <button onclick="invokeMe()" style="border: none; border-radius: 4px; width: 200px; height:35px; background-color: dark-gray; color: white; font-size: 16px; cursor: pointer;">Test the custom event</button>
+  <button onclick="invokeMe()" style="border: none; border-radius: 4px; width: 200px; height:35px; background-color: dark-gray; color: white; font-size: 16px; cursor: pointer; ">Test the custom event</button>
 </div>
 <div data-gift-button></div>
 
