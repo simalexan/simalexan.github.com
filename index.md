@@ -9,16 +9,18 @@ tagline: & seeing what it can do
 <h3>Aleksandar Simovic</h3>
 </div>
 
-<div>
-  <input id="customerEmail" value="" placeholder="Type in an email" style="height: 35px; width: 250px; border-radius: 3px;">
+<div style="width: 40%; margin: 0 auto;">
+
+  <div>
+    <input id="customerEmail" value="" placeholder="Type in an email" style="height: 35px; width: 250px; border-radius: 3px;">
+  </div>
+  
+  <div>
+    <input id="customMessage" value="" placeholder="Type in a message" style="height: 35px; width: 250px; border-radius: 3px;">
+  </div>
+
+  <button onclick="invokeMe()" style="border: none; width: 100px; height:35px; background-color: dark-gray; color: white;">Test the custom event</button>
 </div>
-
-<div>
-  <input id="customMessage" value="" placeholder="Type in a message" style="height: 35px; width: 250px; border-radius: 3px;">
-</div>
-
-<button onclick="invokeMe()" style="border: none; width: 100px; height:35px; background-color: dark-gray; color: white;">Test the custom event</button>
-
 <div data-gift-button></div>
 
 
