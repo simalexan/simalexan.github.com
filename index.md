@@ -12,13 +12,13 @@ tagline: & seeing what it can do
 <div style="width: 30%; margin: 0 auto;">
 
   <div style="margin-bottom: 15px;">
-    <input id="customerEmail" value="" placeholder="Type in an email" 
+    <input id="customerEmail" value="" placeholder="Type in the customer email" 
     style="height: 35px; width: 250px; border-radius: 4px; background-color:#0E4A6D; border: 1px solid #073554; color: #77A8CF; font-size: 16px;">
   </div>
   
   <div style="margin-bottom: 15px;">
-    <input id="customMessage" value="" placeholder="Type in a message" 
-    style="height: 35px; width: 250px; border-radius: 4px; background-color:#0E4A6D; border: 2px solid #073554; color: #77A8CF; font-size: 16px;">
+    <input id="customMessage" value="" placeholder="Type in the gbox message" 
+    style="height: 100px; width: 250px; border-radius: 4px; background-color:#0E4A6D; border: 2px solid #073554; color: #77A8CF; font-size: 16px;">
   </div>
 
   <button onclick="invokeMe()" style="border: none; width: 100px; height:35px; background-color: dark-gray; color: white;">Test the custom event</button>
