@@ -233,7 +233,7 @@ var GiftButton = (function(window, undefined) {
       GiftButton.ctaText = data.ctaText || '';
       GiftButton.thankYouMessage = data.thankYouMessage || 'Thank you for signing up!';
       //GiftButton.thankYouEvent = data.thankYouEvent || 'LEAVE';
-      GiftButton.hasThankYou = GiftButton.thankYouMessage.length > 1 && GiftButton.thankYouEvent.length > 1;
+      GiftButton.hasThankYou = GiftButton.thankYouMessage.length > 1 && GiftButton.thankYouEvent && GiftButton.thankYouEvent.length > 1;
       GiftButton.numShowThankYou = data.numShowThankYou || 1;
 
       callback();
