@@ -9,7 +9,7 @@ tagline: & seeing what it can do
 <h3>Aleksandar Simovic</h3>
 </div>
 
-<div style="width: 40%; margin: 0 auto;">
+<div style="width: 30%; margin: 0 auto;">
 
   <div style="margin-bottom: 15px;">
     <input id="customerEmail" value="" placeholder="Type in an email" 
