@@ -22,12 +22,12 @@ var yAxis = d3.svg.axis()
 var line = d3.svg.area()
   .interpolate("basis")
   .x(function(d) { return x(d.date); })
-  .y(function(d) { return y(d["New York"]); });
+  .y(function(d) { return y(d["Public"]); });
 
 var area = d3.svg.area()
   .interpolate("basis")
   .x(function(d) { return x(d.date); })
-  .y1(function(d) { return y(d["New York"]); });
+  .y1(function(d) { return y(d["Public"]); });
 
 var svg = d3.select("body").append("svg")
   .attr("width", width + margin.left + margin.right)
@@ -40,15 +40,15 @@ d3.tsv("data.tsv", function(error, data) {
 
   data.forEach(function(d) {
     d.date = parseDate(d.date);
-    d["New York"]= +d["New York"];
-    d["San Francisco"] = +d["San Francisco"];
+    d["Public"]= +d["Public"];
+    d["Critics"] = +d["Critics"];
   });
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
 
   y.domain([
-    d3.min(data, function(d) { return Math.min(d["New York"], d["San Francisco"]); }),
-    d3.max(data, function(d) { return Math.max(d["New York"], d["San Francisco"]); })
+    d3.min(data, function(d) { return Math.min(d["Public"], d["Critics"]); }),
+    d3.max(data, function(d) { return Math.max(d["Public"], d["Critics"]); })
   ]);
 
   svg.datum(data);
@@ -66,7 +66,7 @@ d3.tsv("data.tsv", function(error, data) {
   svg.append("path")
     .attr("class", "area above")
     .attr("clip-path", "url(#clip-above)")
-    .attr("d", area.y0(function(d) { return y(d["San Francisco"]); }));
+    .attr("d", area.y0(function(d) { return y(d["Critics"]); }));
 
   svg.append("path")
     .attr("class", "area below")
@@ -90,5 +90,5 @@ d3.tsv("data.tsv", function(error, data) {
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Temperature (ºF)");
+    .text("Ratings (votes)");
 });
