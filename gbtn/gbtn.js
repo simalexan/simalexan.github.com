@@ -231,13 +231,36 @@ var GiftButton = (function(window, undefined) {
       GiftButton.externalUrl = data.externalUrl; // externalUrl
       GiftButton.locale = data.locale || 'ENG';
       GiftButton.ctaText = data.ctaText || '';
-      GiftButton.thankYouMessage = data.thankYouMessage || 'Thank you for signing up!';
-      //GiftButton.thankYouEvent = data.thankYouEvent || 'LEAVE';
-      GiftButton.hasThankYou = GiftButton.thankYouMessage.length > 1 && GiftButton.thankYouEvent.length > 1;
+      GiftButton.thankYouMessage = data.thankYouMessage || '';
+      GiftButton.thankYouEvent = data.thankYouEvent || '';
+      GiftButton.thankYouFormat = data.thankYouFormat || '';
+      GiftButton.hasThankYou = GiftButton.thankYouEvent.length > 1;
       GiftButton.numShowThankYou = data.numShowThankYou || 1;
 
       callback();
     });
+  }
+
+  function getGiftDataByIndex(index){
+    var giftData = {};
+    if (GiftButton.promotions.length == 0) {
+      showNoGiftsModal();
+      return;
+    }
+
+    giftData.promotionId = GiftButton.promotions[index].promotionId;
+    giftData.giftImageUrl = GiftButton.promotions[index].giftImageUrl;
+    giftData.giftName = GiftButton.promotions[index].giftName;
+    giftData.logoUrl = GiftButton.promotions[index].logoUrl;
+    giftData.giftId = GiftButton.promotions[index].giftId;
+    giftData.brandId = GiftButton.promotions[index].brandId;
+    giftData.musicMode = GiftButton.promotions[index].musicCode;
+    giftData._gc = getGiftCookie(GiftButton.data.promotionId);
+    if(GiftButton.cookies){
+      giftData._gc = GiftButton.cookies[index]._gc;
+      giftData.data._gct = GiftButton.cookies[index]._gct;
+    }
+    return giftData;
   }
 
   function setGiftByIndex(index){
@@ -379,8 +402,8 @@ var GiftButton = (function(window, undefined) {
 
 
   function loadModalMarkup(callback){
-
-    var modalTemplateType = GiftButton.promotions.length > 1 ? 'multi-modal' : 'modal';
+    GiftButton.promotions = [GiftButton.promotions[0]]
+    var modalTemplateType = GiftButton.promotions.length > 1 ? 'multi-modal-redesign' : 'modal';
     loadHTMLFile(serverLocation + serverPath +'/templates/' + modalTemplateType + '.html', function (htmlData){
 
       if (!GiftButton.hasLogo) {
@@ -388,8 +411,18 @@ var GiftButton = (function(window, undefined) {
         tree.find('.gButton-logo-component').remove();
         htmlData = tree.html();
       }
+      var markup = htmlData.toString();
+      if (GiftButton.promotions.length >= 1) {
+        var pMarkup = GiftButton.$(markup);
+        var promoLogosMarkup = '';
+        for (var i = 0; i < GiftButton.promotions.length; i++){
+          promoLogosMarkup += '<li><img src="'+GiftButton.promotions[i].logoUrl+'"/></li>';
+        }
+        pMarkup.find('.gButton-img-list').html(promoLogosMarkup);
+        markup = pMarkup.wrap('<p/>').parent().html();
+      }
 
-      var markup = htmlData.toString()
+      markup = markup.toString()
         .replace(/@@serverUrl/g, GiftButton.serverUrl.toString())
         .replace(/@@giftName/g, GiftButton.giftName.toString())
         .replace(/@@logoUrl/g, GiftButton.logoUrl.toString());
@@ -511,6 +544,7 @@ var GiftButton = (function(window, undefined) {
 
 
   GiftButton.openGiftModal = function (){
+    
     GiftButton.promotions = GiftButton.copy(GiftButton.pms);
     GiftButton.$('html').addClass('gButton-body');
     trackButtonClick();
@@ -521,8 +555,9 @@ var GiftButton = (function(window, undefined) {
     appendModalMarkup(function (){
       GiftButton.promotions = GiftButton.copy(GiftButton.pms);
       setTimeout(function (){
-        GiftButton.$('.gButton-banner-module, .banner-module-portrait').css({'background-image': 'url(' + GiftButton.giftImageUrl + ')'});
+        GiftButton.$('.gButton-slider > .current > .gButton-slide').css({'background-image': 'url(' + GiftButton.giftImageUrl + ')'});
         GiftButton.$('.gButton-box, .gButton-popup-overlay').addClass('popup-shown');
+        GiftButton.$('.gButton-slider-outer').addClass('in-view');
         addUILogic();
       },0);
 
@@ -542,9 +577,10 @@ var GiftButton = (function(window, undefined) {
       }, 100);
 
       if(GiftButton.hasThankYou){
+        GiftButton.$('.gButton-entry').addClass('in-view');
         setTimeout(function (){
-          GiftButton.$('.gButton-thankyou-module').addClass('remove-from-view');
-        }, 2800);
+          GiftButton.$('.gButton-entry').removeClass('in-view');
+        }, 6000);
       } else {
         GiftButton.$('.gButton-thankyou-module').hide();
       }
@@ -554,6 +590,12 @@ var GiftButton = (function(window, undefined) {
 
   GiftButton.nextGift = function(){
     removeRedBottomError();
+
+    GiftButton.$('.gButton-slider .next').addClass('move-right');
+    GiftButton.$('.gButton-slider .current').addClass('move-right');
+    GiftButton.$('.gButton-slider .prev').addClass('remove-from-view');
+    GiftButton.$('.gButton-slider .next-in-line').removeClass('inactive').addClass('next');
+
     if (GiftButton.$('.gButton-overlay').hasClass('show-congradulation')) removeCongratsModalMoreGifts();
     if (GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val()) {
       var inputEmailVal = GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val();
@@ -585,6 +627,12 @@ var GiftButton = (function(window, undefined) {
 
   GiftButton.previousGift = function (){
     removeRedBottomError();
+
+    GiftButton.$('.gButton-slider .prev').addClass('move-left');
+    GiftButton.$('.gButton-slider .current').addClass('move-left');
+    GiftButton.$('.gButton-slider .next').addClass('remove-from-view');
+    GiftButton.$('.gButton-slider .next-in-line').removeClass('inactive').addClass('prev');
+
     if (GiftButton.$('.gButton-overlay').hasClass('show-congradulation')) removeCongratsModalMoreGifts();
     if (GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val()) {
       var inputEmailVal = GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val();
@@ -716,16 +764,17 @@ var GiftButton = (function(window, undefined) {
   }
 
   function showCongradulations(){
-    GiftButton.$('.gButton-congradulations-module').css('display', 'block');
+
+    GiftButton.promotions = [GiftButton.promotions[0]];
+    if(GiftButton.promotions.length < 2){
+      GiftButton.$('.congrats-box .congrats-bottom').hide();
+    }
     setTimeout(function () {
-      GiftButton.$('.gButton-congradulations-module').addClass('show-congradulation');
+      GiftButton.$('.gButton-slide').addClass('congrats-in-view');
     }, 20);
 
-    GiftButton.$('.gButton-overlay').addClass('show-congradulation');
-    GiftButton.$('.gButton-banner-module > .gButton-explainer-component').hide();
-
     if(GiftButton.promotions.length < 1){
-      //GiftButton.$('.gButton-prev-arrow, .gButton-next-arrow, .gButton-resend-email, .gButton-form-module').hide();
+      //GiftButton.$('.gButton-prev-arrow, .gButton-next-arrow, .gButton-resend-email').hide();
     }
   }
 
@@ -737,7 +786,7 @@ var GiftButton = (function(window, undefined) {
 
     var congModule = GiftButton.$('.gButton-congradulations-module');
     congModule.find('.gButton-main-headline').html(headlineText);
-    congModule.find('#gButton-congratulations-instructions').html(descriptionText);
+    congModule.find('.congrats-box.gButton-entry > h4').html(descriptionText);
 
     GiftButton.$('.gButton-banner-module > .gButton-explainer-component').hide();
 
@@ -752,7 +801,7 @@ var GiftButton = (function(window, undefined) {
   function resetNoGiftModifications() {
     var congModule = GiftButton.$('.gButton-congradulations-module');
     congModule.find('.gButton-main-headline').html(GiftButton.translations['modal']['congratulations']['greatGiftCode']);
-    congModule.find('#gButton-congratulations-instructions').html(GiftButton.redeemLink);
+    congModule.find('.congrats-box.gButton-entry > h4').html(GiftButton.redeemLink);
     GiftButton.$('.gButton-banner-module > .gButton-explainer-component').show();
     var sendEmailBtn = congModule.find('.gButton-to-email');
     sendEmailBtn.html(GiftButton.translations['modal']['congratulations']['clickToRedeem']);
@@ -779,7 +828,7 @@ var GiftButton = (function(window, undefined) {
     var imgSrc = congIcon.attr('src').replace('gift-icon', 'error-icon');
     congIcon.attr('src', imgSrc);
     congModule.find('.gButton-main-headline').html(headlineText);
-    congModule.find('#gButton-congratulations-instructions').html(errorText);
+    congModule.find('.congrats-box.gButton-entry > h4').html(errorText);
     GiftButton.$('.gButton-progress-component').css('background', '#F94F48');
 
     var sendEmailBtn = congModule.find('.gButton-to-email');
@@ -791,13 +840,18 @@ var GiftButton = (function(window, undefined) {
   }
 
   function resetCongratulations(){
-    showBannerComponents();
+
+    if(GiftButton.promotions.length >= 2){
+      GiftButton.$('.congrats-box .congrats-bottom').show();
+    }
+    GiftButton.$('.gButton-slide').removeClass('congrats-in-view');
+    /*showBannerComponents();
     var congModule = GiftButton.$('.gButton-congradulations-module');
     var congIcon  = congModule.find('.gButton-congratulations-icon');
-    var imgSrc = congIcon.attr('src').replace('error-icon', 'gift-icon');
-    congIcon.attr('src', imgSrc);
+    //var imgSrc = congIcon.attr('src').replace('error-icon', 'gift-icon');
+    //congIcon.attr('src', imgSrc);
     congModule.find('.gButton-main-headline').html(GiftButton.translations['modal']['congratulations']['headline']);
-    congModule.find('#gButton-congratulations-instructions').html(GiftButton.translations['modal']['congratulations']['instructions']);
+    congModule.find('.congrats-box.gButton-entry > h4').html(GiftButton.translations['modal']['congratulations']['instructions']);
     GiftButton.$('.gButton-progress-component').removeAttr('style');
 
     GiftButton.progressBar.progCurrent = 0;
@@ -817,7 +871,7 @@ var GiftButton = (function(window, undefined) {
     GiftButton.$('.gButton-form-module .active').removeClass('active');
     GiftButton.$('.gButton-input-wrapper').first().addClass('active');
     congModule.hide();
-    GiftButton.$('.gButton-congradulations-module, .gButton-overlay').removeClass('show-congradulation');
+    GiftButton.$('.gButton-congradulations-module, .gButton-overlay').removeClass('show-congradulation');*/
   }
 
   GiftButton.keyUpEmailInput = function (e) {
@@ -843,26 +897,26 @@ var GiftButton = (function(window, undefined) {
   };
 
   function showErrorMsg(){
-    var errElem = document.querySelector('.gButton-error-msg.invalid-email');
-    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
+    var errElem = document.querySelector('.gButton-slide-content > fieldset');
+    var errClass = GiftButton.promotions.length > 1 ? 'has-error' : 'has-error';
     addClass(errElem, errClass);
   }
 
   function removeErrorMsg(){
-    var errElem = document.querySelector('.gButton-error-msg.invalid-email');
-    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
+    var errElem = document.querySelector('.gButton-slide-content > fieldset');
+    var errClass = GiftButton.promotions.length > 1 ? 'has-error' : 'has-error';
     removeClass(errElem, errClass);
   }
 
   function showRedBottomError(errorCode){
-    var errElem = errorCode == 2009 ? document.querySelector('.gButton-error-msg.gifted-email') : document.querySelector('.gButton-error-msg.no-gifts');
-    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
+    var errElem = errorCode == 2009 ? document.querySelector('.gifted-email') : document.querySelector('.no-gifts');
+    var errClass = GiftButton.promotions.length > 1 ? 'show-error' : 'show-error';
     addClass(errElem, errClass);
   }
 
   function removeRedBottomError(){
     //var errElem = document.querySelector('.gButton-error-msg');
-    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
+    var errClass = GiftButton.promotions.length > 1 ? 'show-error' : 'show-error';
     GiftButton.$('.gButton-error-msg').removeClass(errClass);
   }
 
@@ -899,6 +953,43 @@ var GiftButton = (function(window, undefined) {
       removeErrorMsg();
       removeRedBottomError();
     });
+
+    GiftButton.getGift = function(){
+      var inputEmail = GiftButton.$('.gButton-gift-email-input').val();
+
+      if( !isEmail(inputEmail) ) {
+        showErrorMsg();
+      } else {
+        GiftButton.data.email = inputEmail;
+
+        if (GiftButton.module == 'E'){
+          sendGatheredData(function (error, response){
+            if(error != null ){
+              error = error.error ? error.error : error;
+              if (error.code && error.code == '2009') {
+                showRedBottomError(2009);
+                return;
+              } else if (error.messages && error.messages[0].indexOf('gift code not issued') != -1 ||
+                (error.messages && error.messages[0].indexOf('gift code not issued') != -1)){
+                showErrorModal(GiftButton.translations['modal']['issuingError']);
+              } else if (error.code && error.code == '2006'){
+                showRedBottomError(2006);
+                return;
+              } else {
+                showErrorModal(GiftButton.translations['modal']['issuingError']);
+              }
+              return;
+            } else {
+              GiftButton.redeemLink = response.redeemLink;
+              GiftButton.giftCode = response.giftCode;
+              GiftButton.$('.gButton-slide > .congrats-box > p').html(GiftButton.giftCode);
+            }
+
+            showCongradulations();
+          });
+        }
+      }
+    };
 
 
     //TODO: Refactor each function to each of the buttons
@@ -1056,9 +1147,11 @@ var GiftButton = (function(window, undefined) {
     GiftButton.$('.gButton-prev-arrow, .gButton-next-arrow, .gButton-resend-email, .gButton-form-module').show();
     GiftButton.$('html').removeClass('gButton-body');
     clearInterval(GiftButton.checker);
-    resetCongratulations();
     var elms = GiftButton.$('.gButton-box, .gButton-popup-overlay');
     elms.removeClass('popup-shown');
+    setTimeout(function(){
+      resetCongratulations();
+    }, 0);
     GiftButton.progressBar = {
       formSteps: 0,
       progPortion: 0,
@@ -1103,7 +1196,7 @@ function _gcGBCustomInvoke(){
   if (GiftButton.thankYouEvent == 'CUSTOM' && arguments.length == 1
     && typeof arguments[0] == 'string'){
     GiftButton.invokeGCModal(arguments[0]);
-  } else if (GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && arguments.length == 2
+  } else if (GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && arguments.length == 1
     && typeof arguments[0] == 'string' && typeof arguments[1] == 'string'){
     GiftButton.invokeGCModal(arguments[0], arguments[1]);
   } else {

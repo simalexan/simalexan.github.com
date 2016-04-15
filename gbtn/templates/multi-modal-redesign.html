@@ -1,0 +1,117 @@
+<div>
+  <div class="gButton-box gButton-new-box popup-shown">
+
+    <div class="gButton-central gButton-entry white"> <!-- Add class 'in-view' to show it -->
+      <h5>Thanks for signing up</h5>
+      <img class="thank-you-img" src="https://stage-ps.giftconnect.com/gbtn/img/gift-icon.svg" alt="">
+      <div class="gButton-brand-list">
+        <h4>Enjoy gifts from</h4>
+        <ul class="gButton-img-list">
+          <li><img src="img/nestle-logo.png" alt="Nesle"></li>
+          <li><img src="img/mcdonalds-logo.png" alt="Nesle"></li>
+          <li><img src="img/amazon-logo.png" alt="Nesle"></li>
+          <li><img src="img/hellofresh-logo.png" alt="Nesle"></li>
+        </ul>
+      </div>
+      <p class="gButton-powered">powered by GiftConnect</p>
+    </div><!-- / Initial white box -->
+
+    <div class="gButton-slider-outer"> <!-- Add class 'in-view' to show it -->
+
+      <ul class="gButton-slider">
+        <li class="next">
+          <img src="img/mcdonalds-logo.png" alt="" class="brand-logo">
+          <div class="gButton-slide" style="background-image:url(img/box-img-1.jpg);">
+            <div class="gButton-slide-content gButton-entry">
+              <h6>We are giving away</h6>
+              <h4>$40 to use in Hello Fresh stores</h4>
+              <fieldset>
+                <input type="text" placeholder="Your Email">
+                <button>Take this gift</button>
+              </fieldset>
+            </div>
+          </div>
+        </li>
+        <li class="current">
+          <img src="img/hellofresh-logo.png" alt="" class="brand-logo">
+          <div class="gButton-slide" style="background-image:url(img/box-img-1.jpg);">
+            <!-- Add class 'congrats-in-view' to show Congrats box -->
+            <div class="gButton-slide-content gButton-entry">
+              <h6>We are giving away</h6>
+              <h4>$40 to use in Hello Fresh stores</h4>
+              <ul class="music-controls">
+                <li><span class="icon-play_arrow"></span></li>
+                <li><span class="icon-skip_next"></span></li>
+                <li><span class="icon-thumb_up"></span></li>
+                <li><span class="icon-thumb_down"></span></li>
+              </ul>
+              <fieldset>
+                <input type="text" placeholder="Your Email">
+                <button>Take this gift</button>
+                <span class="error">Oooops! Your email doesen’t look right.</span>
+              </fieldset>
+            </div>
+            <div class="congrats-box gButton-entry">
+              <h4>Congratulations!<br>
+                Your gift code is:</h4>
+              <p>238798743</p>
+              <a href="#" class="btn">Click to redeem</a>
+              <a href="#" class="congrats-bottom">Get more gifts</a>
+            </div>
+          </div>
+        </li>
+        <li class="prev">
+          <img src="img/nestle-logo.png" alt="" class="brand-logo">
+          <div class="gButton-slide" style="background-image:url(img/box-img-1.jpg);">
+            <div class="gButton-slide-content gButton-entry">
+              <h6>We are giving away</h6>
+              <h4>$40 to use in Hello Fresh stores</h4>
+              <fieldset>
+                <input type="text" placeholder="Your Email">
+                <button>Take this gift</button>
+              </fieldset>
+            </div>
+          </div>
+        </li>
+        <li class="inactive next-in-line">
+          <img src="img/hellofresh-logo.png" alt="" class="brand-logo">
+          <div class="gButton-slide" style="background-image:url(img/box-img-1.jpg);">
+            <div class="gButton-slide-content gButton-entry">
+              <h6>We are giving away</h6>
+              <h4>$40 to use in Hello Fresh stores</h4>
+              <fieldset>
+                <input type="text" placeholder="Your Email">
+                <button>Take this gift</button>
+              </fieldset>
+            </div>
+          </div>
+        </li>
+        <li class="inactive">
+          <img src="img/hellofresh-logo.png" alt="" class="brand-logo">
+          <div class="gButton-slide" style="background-image:url(img/box-img-1.jpg);">
+            <div class="gButton-slide-content gButton-entry">
+              <h6>We are giving away</h6>
+              <h4>$40 to use in Hello Fresh stores</h4>
+              <fieldset>
+                <input type="text" placeholder="Your Email">
+                <button>Take this gift</button>
+              </fieldset>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <span class="gButton-controls prev" onclick="GiftButton.previousGift()">Previous</span>
+      <span class="gButton-controls next" onclick="GiftButton.nextGift()">Next</span>
+
+      <ul class="gButton-pager">
+        <li></li>
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+      </ul>
+
+    </div>
+
+  </div><!-- / Box outer wrapper -->
+  <div class="gButton-popup-overlay popup-shown" onclick="GiftButton.closeGiftModal()"></div>
+</div>
