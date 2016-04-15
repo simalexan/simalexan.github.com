@@ -1,0 +1,27 @@
+<li>
+  <img src="@@logoUrl" alt="" class="brand-logo" height="60">
+  <div class="gButton-slide">
+    <!-- Add class 'congrats-in-view' to show Congrats box -->
+    <div class="gButton-slide-content gButton-entry">
+      <h6>@@modalExplainer</h6>
+      <h4>@giftName</h4>
+      <fieldset>
+        <input type="text" placeholder="Your Email" class="gButton-gift-email-input"
+               onkeyup="GiftButton.keyUpEmailInput(event)"
+               onfocus="GiftButton.emailInputFocus(event)"
+               onblur="GiftButton.emailInputBlur(event)">
+        <button onclick="GiftButton.getGift()">Take this gift</button>
+        <span class="error invalid-email">@@modalEmailFormInvalidEmail</span>
+        <div class="error gifted-email">@@modalEmailFormGiftedEmail</div>
+        <div class="error no-gifts">@@modalEmailFormNoGifts</div>
+      </fieldset>
+    </div>
+    <div class="congrats-box gButton-entry">
+      <h4>Congratulations!<br>
+        Your gift code is:</h4>
+      <p>238798743</p>
+      <a class="btn" onclick="GiftButton.openRedeemLink()">@@modalCongratulationsClickToRedeem</a>
+      <a class="congrats-bottom" onclick="GiftButton.getMoreGifts()">@@modalCongratulationsGetMoreGifts</a>
+    </div>
+  </div>
+</li>

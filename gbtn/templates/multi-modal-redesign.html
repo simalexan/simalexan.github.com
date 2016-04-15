@@ -19,7 +19,13 @@
     <div class="gButton-slider-outer"> <!-- Add class 'in-view' to show it -->
 
       <ul class="gButton-slider">
-        <li class="next">
+
+
+
+
+
+
+        <!--<li class="next">
           <img src="img/mcdonalds-logo.png" alt="" class="brand-logo">
           <div class="gButton-slide" style="background-image:url(img/box-img-1.jpg);">
             <div class="gButton-slide-content gButton-entry">
@@ -33,32 +39,31 @@
           </div>
         </li>
         <li class="current">
-          <img src="img/hellofresh-logo.png" alt="" class="brand-logo">
-          <div class="gButton-slide" style="background-image:url(img/box-img-1.jpg);">
-            <!-- Add class 'congrats-in-view' to show Congrats box -->
-            <div class="gButton-slide-content gButton-entry">
-              <h6>We are giving away</h6>
-              <h4>$40 to use in Hello Fresh stores</h4>
-              <ul class="music-controls">
-                <li><span class="icon-play_arrow"></span></li>
-                <li><span class="icon-skip_next"></span></li>
-                <li><span class="icon-thumb_up"></span></li>
-                <li><span class="icon-thumb_down"></span></li>
-              </ul>
-              <fieldset>
-                <input type="text" placeholder="Your Email">
-                <button>Take this gift</button>
-                <span class="error">Oooops! Your email doesen’t look right.</span>
-              </fieldset>
+
+            <img src="@@logoUrl" alt="" class="brand-logo">
+            <div class="gButton-slide">
+              <div class="gButton-slide-content gButton-entry">
+                <h6>@@modalExplainer</h6>
+                <h4>@giftName</h4>
+                <fieldset>
+                  <input type="text" placeholder="Your Email" class="gButton-gift-email-input"
+                         onkeyup="GiftButton.keyUpEmailInput(event)"
+                         onfocus="GiftButton.emailInputFocus(event)"
+                         onblur="GiftButton.emailInputBlur(event)">
+                  <button onclick="GiftButton.getGift()">Take this gift</button>
+                  <span class="error invalid-email">@@modalEmailFormInvalidEmail</span>
+                  <div class="error gifted-email">@@modalEmailFormGiftedEmail</div>
+                  <div class="error no-gifts">@@modalEmailFormNoGifts</div>
+                </fieldset>
+              </div>
+              <div class="congrats-box gButton-entry">
+                <h4>Congratulations!<br>
+                  Your gift code is:</h4>
+                <p>238798743</p>
+                <a class="btn" onclick="GiftButton.openRedeemLink()">@@modalCongratulationsClickToRedeem</a>
+                <a class="congrats-bottom" onclick="GiftButton.getMoreGifts()">@@modalCongratulationsGetMoreGifts</a>
+              </div>
             </div>
-            <div class="congrats-box gButton-entry">
-              <h4>Congratulations!<br>
-                Your gift code is:</h4>
-              <p>238798743</p>
-              <a href="#" class="btn">Click to redeem</a>
-              <a href="#" class="congrats-bottom">Get more gifts</a>
-            </div>
-          </div>
         </li>
         <li class="prev">
           <img src="img/nestle-logo.png" alt="" class="brand-logo">
@@ -98,7 +103,7 @@
               </fieldset>
             </div>
           </div>
-        </li>
+        </li>-->
       </ul>
       <span class="gButton-controls prev" onclick="GiftButton.previousGift()">Previous</span>
       <span class="gButton-controls next" onclick="GiftButton.nextGift()">Next</span>
