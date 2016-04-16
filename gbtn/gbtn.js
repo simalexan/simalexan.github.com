@@ -3,10 +3,10 @@ var GiftButton = (function(window, undefined) {
   var secure = window.location.protocol === 'https:';
   var apiLocation = 'https' + '@@apiLocation';
   var serverLocation = 'https://simalexan.github.io';
-  var cisApiLocation = 'https://preprod-cis.giftconnect.com';
-  var dashboardLocation = 'http:/preprod-app.giftconnect.com';
-  var psApiLocation = 'https://preprod-ps.giftconnect.com/v1';
-  var trackingApiLocation = 'https://preprod-ps.giftconnect.com/v1';
+  var cisApiLocation = 'https://stage-cis.giftconnect.com';
+  var dashboardLocation = 'http:/stage-app.giftconnect.com';
+  var psApiLocation = 'https://stage-ps.giftconnect.com/v1';
+  var trackingApiLocation = 'https://stage-ps.giftconnect.com/v1';
   var serverPath = '/gbtn';
   var jsPath = '';
   var cssFile = 'gbtn.min.css';
@@ -73,7 +73,7 @@ var GiftButton = (function(window, undefined) {
 
           GiftButton.gbSnag = Bugsnag.noConflict();
           GiftButton.gbSnag.apiKey = '5148ebbc874795d81d0ff61c9982ac9a';
-          GiftButton.gbSnag.releaseStage = 'demo-v2-preprod';
+          GiftButton.gbSnag.releaseStage = 'demo-v2-stage';
           GiftButton.gbSnag.beforeNotify = function(payload) {
             var match = payload.file.match(/gbtn\.js|jq\.js|jq-ea\.js/i);
             return !!(match && match[0].length > 0);

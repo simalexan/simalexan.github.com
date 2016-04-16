@@ -31,7 +31,7 @@ tagline: & seeing what it can do
   (function() {
     var script = document.createElement('script');
     script.async = true;
-    script.src = 'https://simalexan.github.io/gbtn/gbtn.js?uuid=05b0e0dc-543c-4647-bf61-b89e5fa9d396&t=CUSTOM-EMAIL';
+    script.src = 'https://simalexan.github.io/gbtn/gbtn.js?uuid=1f72ac29-4832-4156-8e13-dde0f6ffff78';
     var entry = document.getElementsByTagName('script')[0];
     entry.parentNode.insertBefore(script, entry);
   })();
