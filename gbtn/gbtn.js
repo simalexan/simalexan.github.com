@@ -673,22 +673,29 @@ var GiftButton = (function(window, undefined) {
 
 
     if (GiftButton.promotions.length == 2) {
-
-      GiftButton.$('.gButton-slider .prev').removeClass('prev').addClass('current');
-      GiftButton.$('.gButton-slider .current').removeClass('current').addClass('prev');
-      GiftButton.$('.gButton-slider .next').removeClass('next').addClass('current');
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .current').removeClass('active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('current active');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
 
     } else if (GiftButton.promotions.length == 3) {
 
-      GiftButton.$('.gButton-slider .prev').removeClass('prev').addClass('next');
-      GiftButton.$('.gButton-slider .current').removeClass('current').addClass('prev');
-      GiftButton.$('.gButton-slider .next').removeClass('next').addClass('current');
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .current').removeClass('active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('next');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
 
     } else if (GiftButton.promotions.length > 3){
-      GiftButton.$('.gButton-slider .prev').removeClass('prev').addClass('inactive');
-      GiftButton.$('.gButton-slider .current').removeClass('current').addClass('prev');
-      GiftButton.$('.gButton-slider .next').removeClass('next').addClass('current');
-      GiftButton.$('.gButton-slider .current').next().addClass('next');
+
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .current').removeClass('active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
+      GiftButton.$('.gButton-slider > li:last').removeClass('inactive').addClass('next');
+
     }
 
     /*GiftButton.$('.gButton-slider .prev').addClass('move-right');
@@ -741,36 +748,31 @@ var GiftButton = (function(window, undefined) {
     removeRedBottomError();
 
     if (GiftButton.promotions.length == 2) {
-
-      GiftButton.$('.gButton-slider .next').removeClass('next').addClass('current');
-      GiftButton.$('.gButton-slider .current').removeClass('current').addClass('prev');
+      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
+      GiftButton.$('.gButton-slider > .current').removeClass('active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('current active');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
 
     } else if (GiftButton.promotions.length == 3) {
 
-      GiftButton.$('.gButton-slider .next').removeClass('next').addClass('current');
-      GiftButton.$('.gButton-slider .current').removeClass('current').addClass('next');
-      GiftButton.$('.gButton-slider .prev').removeClass('prev').addClass('current');
+      GiftButton.$('.gButton-slider > .prev').previousSibling().removeClass('inactive').addClass('prev');
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('inactive');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .current').removeClass('active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('next');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
 
     } else if (GiftButton.promotions.length > 3){
-      GiftButton.$('.gButton-slider .prev').removeClass('prev').addClass('inactive');
-      GiftButton.$('.gButton-slider .current').removeClass('current').addClass('prev');
-      GiftButton.$('.gButton-slider .next').removeClass('next').addClass('current');
-      GiftButton.$('.gButton-slider .current').next().addClass('next');
+
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .current').removeClass('active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
+      GiftButton.$('.gButton-slider > li:last').removeClass('inactive').addClass('next');
+
     }
-
-    /*GiftButton.$('.gButton-slider .prev').addClass('move-left');
-    GiftButton.$('.gButton-slider .current').addClass('move-left');
-    GiftButton.$('.gButton-slider .next').addClass('move-left');
-    GiftButton.$('.gButton-slider .next-in-line').addClass('move-left');
-
-    setTimeout(function(){
-      GiftButton.$('.gButton-slider .prev').removeClass('move-left, prev').addClass('inactive');
-      GiftButton.$('.gButton-slider .current').removeClass('move-left, current').addClass('prev');
-      GiftButton.$('.gButton-slider .next').removeClass('move-left, next').addClass('current');
-      GiftButton.$('.gButton-slider .current').next().addClass('next');
-    }, 1000);*/
-
-
 
 
     if (GiftButton.$('.gButton-overlay').hasClass('show-congradulation')) removeCongratsModalMoreGifts();
