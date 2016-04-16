@@ -597,7 +597,7 @@ var GiftButton = (function(window, undefined) {
     });
   }
   
-  function prepareGiftTemplate(giftName, logoUrl){
+  function prepareGiftTemplate(giftName, giftImageUrl, logoUrl){
     var translations = GiftButton.translations;
     var tpl = GiftButton.giftTemplate;
     tpl = tpl.toString()
@@ -622,8 +622,9 @@ var GiftButton = (function(window, undefined) {
       .replace(/@@modalGenderFormOther/g, translations['modal']['genderForm']['other'])
       .replace(/@@modalAgeFormHeadline/g, translations['modal']['ageForm']['headline'])
       .replace(/@@serverUrl/g, GiftButton.serverUrl.toString())
-      .replace(/@@giftName/g, giftName.toString())
-      .replace(/@@logoUrl/g, logoUrl.toString());
+      .replace(/@@giftName/g, giftName)
+      .replace(/@@giftImageUrl/g, giftImageUrl)
+      .replace(/@@logoUrl/g, logoUrl);
 
     return tpl;
   }
@@ -632,7 +633,7 @@ var GiftButton = (function(window, undefined) {
     var totalTpls = '';
     for (var i = 0; i<promos.length; i++){
       var promo = promos[i];
-      totalTpls += prepareGiftTemplate(promo.giftName, promo.logoUrl);
+      totalTpls += prepareGiftTemplate(promo.giftName, promo.giftImageUrl, promo.logoUrl);
     }
     return totalTpls;
   }
