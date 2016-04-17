@@ -699,7 +699,7 @@ var GiftButton = (function(window, undefined) {
       if (GiftButton.$('.gButton-slider > .current').prev('li').length) {
         GiftButton.$('.gButton-slider > .current').prev('li').removeClass('inactive').addClass('next');
       } else {
-        GiftButton.$('.gButton-slider > li:first').removeClass('inactive').addClass('next');
+        GiftButton.$('.gButton-slider > li:last').removeClass('inactive').addClass('next');
       }
 
     }
