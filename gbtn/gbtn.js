@@ -674,32 +674,32 @@ var GiftButton = (function(window, undefined) {
 
 
     if (GiftButton.promotions.length == 2) {
-      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
       GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('current active');
-      GiftButton.$('.gButton-slider > .prev').removeClass('active');
+      GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('inactive');
+      GiftButton.$('.gButton-slider > .next').removeClass('active');
 
     } else if (GiftButton.promotions.length == 3) {
 
-      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
       GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('next');
-      GiftButton.$('.gButton-slider > .prev').removeClass('active');
+      GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('inactive');
+      GiftButton.$('.gButton-slider > .next').removeClass('active');
 
     } else if (GiftButton.promotions.length > 3){
-
-      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
+      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
       GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
-      GiftButton.$('.gButton-slider > .prev').removeClass('active');
+      GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('inactive');
+      GiftButton.$('.gButton-slider > .next').removeClass('active');
 
-      if (GiftButton.$('.gButton-slider > .current').prev('li.inactive').length) {
-        GiftButton.$('.gButton-slider > .current').prev('li.inactive').removeClass('inactive').addClass('prev');
+
+      if (GiftButton.$('.gButton-slider > .current').next('li.inactive').length) {
+        GiftButton.$('.gButton-slider > .current').next('li.inactive').removeClass('inactive').addClass('next');
       } else {
-        GiftButton.$('.gButton-slider > li.inactive:first').removeClass('inactive').addClass('prev');
+        GiftButton.$('.gButton-slider > li.inactive:last').removeClass('inactive').addClass('next');
       }
 
     }
@@ -754,31 +754,31 @@ var GiftButton = (function(window, undefined) {
     removeRedBottomError();
 
     if (GiftButton.promotions.length == 2) {
-      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
       GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('current active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
       GiftButton.$('.gButton-slider > .prev').removeClass('active');
 
     } else if (GiftButton.promotions.length == 3) {
 
-      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
       GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('prev');
-      GiftButton.$('.gButton-slider > .next').removeClass('active');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
 
     } else if (GiftButton.promotions.length > 3){
 
-      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
+      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
+      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
       GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('inactive');
-      GiftButton.$('.gButton-slider > .next').removeClass('active');
-      if (GiftButton.$('.gButton-slider > .current').next('li.inactive').length) {
-        GiftButton.$('.gButton-slider > .current').next('li.inactive').removeClass('inactive').addClass('next');
+      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
+      GiftButton.$('.gButton-slider > .prev').removeClass('active');
+      if (GiftButton.$('.gButton-slider > .current').prev('li.inactive').length) {
+        GiftButton.$('.gButton-slider > .current').prev('li.inactive').removeClass('inactive').addClass('prev');
       } else {
-        GiftButton.$('.gButton-slider > li.inactive:last').removeClass('inactive').addClass('next');
+        GiftButton.$('.gButton-slider > li.inactive:first').removeClass('inactive').addClass('prev');
       }
     }
 
