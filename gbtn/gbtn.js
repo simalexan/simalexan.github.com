@@ -699,7 +699,7 @@ var GiftButton = (function(window, undefined) {
       if (GiftButton.$('.gButton-slider > .current').prev('li').length) {
         GiftButton.$('.gButton-slider > .current').prev('li').removeClass('inactive').addClass('next');
       } else {
-        GiftButton.$('.gButton-slider > li:last').removeClass('inactive').addClass('next');
+        GiftButton.$('.gButton-slider > li.inactive:last').removeClass('inactive').addClass('next');
       }
 
     }
@@ -778,7 +778,7 @@ var GiftButton = (function(window, undefined) {
       if (GiftButton.$('.gButton-slider > .current').next('li').length) {
         GiftButton.$('.gButton-slider > .current').next('li').removeClass('inactive').addClass('prev');
       } else {
-        GiftButton.$('.gButton-slider > li:first').removeClass('inactive').addClass('prev');
+        GiftButton.$('.gButton-slider > li.inactive:first').removeClass('inactive').addClass('prev');
       }
     }
 
