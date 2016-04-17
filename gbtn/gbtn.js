@@ -693,6 +693,8 @@ var GiftButton = (function(window, undefined) {
       GiftButton.$('.gButton-slider .next').addClass('move-right');
       GiftButton.$('.gButton-slider .current').addClass('move-right');
       setTimeout(function(){
+        GiftButton.$('.gButton-slider .next').removeClass('move-right');
+        GiftButton.$('.gButton-slider .current').removeClass('move-right');
         GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
         GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
         GiftButton.$('.gButton-slider > .current').removeClass('active');
@@ -780,6 +782,9 @@ var GiftButton = (function(window, undefined) {
       GiftButton.$('.gButton-slider .current').addClass('move-left');
 
       setTimeout(function(){
+        GiftButton.$('.gButton-slider .prev').removeClass('move-left');
+        GiftButton.$('.gButton-slider .current').removeClass('move-left');
+
         GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
         GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
         GiftButton.$('.gButton-slider > .current').removeClass('active');
