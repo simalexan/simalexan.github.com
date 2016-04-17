@@ -692,9 +692,9 @@ var GiftButton = (function(window, undefined) {
 
       GiftButton.$('.gButton-slider .next').addClass('move-right');
       GiftButton.$('.gButton-slider .current').addClass('move-right');
-      setTimeout(function(){
-        GiftButton.$('.gButton-slider .next').removeClass('move-right');
-        GiftButton.$('.gButton-slider .current').removeClass('move-right');
+      /*setTimeout(function(){
+        //GiftButton.$('.gButton-slider .next').removeClass('move-right');
+        //GiftButton.$('.gButton-slider .current').removeClass('move-right');
         GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
         GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
         GiftButton.$('.gButton-slider > .current').removeClass('active');
@@ -707,7 +707,7 @@ var GiftButton = (function(window, undefined) {
         } else {
           GiftButton.$('.gButton-slider > li.inactive:first').removeClass('inactive').addClass('prev');
         }
-      }, 700);
+      }, 700);*/
 
 
 
@@ -781,9 +781,9 @@ var GiftButton = (function(window, undefined) {
       GiftButton.$('.gButton-slider .prev').addClass('move-left');
       GiftButton.$('.gButton-slider .current').addClass('move-left');
 
-      setTimeout(function(){
-        GiftButton.$('.gButton-slider .prev').removeClass('move-left');
-        GiftButton.$('.gButton-slider .current').removeClass('move-left');
+      /*setTimeout(function(){
+        //GiftButton.$('.gButton-slider .prev').removeClass('move-left');
+        //GiftButton.$('.gButton-slider .current').removeClass('move-left');
 
         GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
         GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
@@ -797,7 +797,7 @@ var GiftButton = (function(window, undefined) {
         } else {
           GiftButton.$('.gButton-slider > li.inactive:last').removeClass('inactive').addClass('next');
         }
-      }, 700);
+      }, 700);*/
     }
 
 
