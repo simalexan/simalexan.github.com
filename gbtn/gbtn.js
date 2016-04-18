@@ -793,7 +793,7 @@ var GiftButton = (function(window, undefined) {
 
       setTimeout(function(){
         GiftButton.$('.gButton-slider .prev').removeClass('prev').addClass('current active').removeClass('move-left');
-        GiftButton.$('.gButton-slider .current').not('.active').removeClass('current').addClass('next').removeClass('move-left');
+        GiftButton.$('.gButton-slider .current').not('.active').removeClass('current').addClass('next active').removeClass('move-left');
         GiftButton.$('.gButton-slider .current').removeClass('active');
         GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('inactive');
         GiftButton.$('.gButton-slider > .next').removeClass('active');
