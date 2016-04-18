@@ -717,7 +717,7 @@ var GiftButton = (function(window, undefined) {
         } else {
           GiftButton.$('.gButton-slider > li.inactive:first').removeClass('inactive').addClass('prev');
         }*/
-      }, 700);
+      }, 500);
 
 
 
@@ -815,7 +815,7 @@ var GiftButton = (function(window, undefined) {
         } else {
           GiftButton.$('.gButton-slider > li.inactive:last').removeClass('inactive').addClass('next');
         }*/
-      }, 700);
+      }, 500);
     }
 
 
