@@ -1,27 +1,14 @@
 
 <div class="gButton-box gButton-multi-box">
   <img class="gButton-close" src="@@serverUrl/img/close.png" alt="" onclick="GiftButton.closeGiftModal()">
-
-  <div class="gButton-thankyou-module">
-    <p class="gButton-powered">powered by GiftConnect</p>
-    <h1 class="gButton-main-headline">@@thankYouMessage</h1>
-    <img class="gButton-check-icon" src="@@serverUrl/img/check-icon.svg" alt="">
-    <img class="gButton-congratulations-icon" src="@@serverUrl/img/gift-icon.svg" alt="">
-  </div>
-
-  <div class="gButton-multi-logo-component cf">
-    <img src="@@logoUrl" alt="">
-    <p class="copyright">Powered by GiftConnect</p>
-  </div>
-  
-  <div class="gButton-prev-arrow" onclick="GiftButton.previousGift()"><img src="@@serverUrl/img/prev-arrow.svg" ></div>
-  <div class="gButton-next-arrow" onclick="GiftButton.nextGift()"><img src="@@serverUrl/img/next-arrow.svg" ></div>
-
+  <section class="gButton-nav">
+    <div class="gButton-prev-arrow" onclick="GiftButton.previousGift()"><img src="@@serverUrl/img/prev-arrow.svg" ></div>
+    <div class="gButton-multi-logo-component text-center"><img src="@@logoUrl" alt=""></div>
+    <div class="gButton-next-arrow" onclick="GiftButton.nextGift()"><img src="@@serverUrl/img/next-arrow.svg" ></div>
+  </section>
   <section class="gButton-music-module"></section>
-  
   <section class="gButton-banner-module">
     <div class="gButton-overlay"></div>
-
     <div class="gButton-explainer-component">
       <h1 class="gButton-main-headline">@@modalExplainer <br><span>@@giftName</span></h1>
     </div>

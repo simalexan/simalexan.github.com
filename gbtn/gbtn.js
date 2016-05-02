@@ -36,7 +36,7 @@ var GiftButton = (function(window, undefined) {
     cookie: null,
     bannerModule: null,
     checker: null,
-    ctaText: ''
+    isOpen: false
   };
 
   function loadScript(url, callback) {
@@ -66,7 +66,6 @@ var GiftButton = (function(window, undefined) {
 
   function loadSupportingFiles(callback) {
     loadStylesheet(GiftButton.serverUrl + cssPath);
-    loadGiftElementTemplate();
     loadScript(GiftButton.serverUrl + jsPath +'/jq.js', function() {
       loadScript(GiftButton.serverUrl + jsPath + '/jq-ea.js', function (){
         loadScript(GiftButton.serverUrl + jsPath + '/bugsnag-2.min.js', function (){
@@ -148,15 +147,14 @@ var GiftButton = (function(window, undefined) {
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
-        var response;
         if (request.responseText == 'OK') {
           callback(null, {});
           return;
         }
-        response = request.responseText ? JSON.parse(request.responseText) : {};
+        var response = request.responseText ? JSON.parse(request.responseText) : {};
         callback(null, response);
       } else {
-        response = request.responseText ? JSON.parse(request.responseText) : request.response;
+        var response = request.responseText ? JSON.parse(request.responseText) : request.response;
         callback(response, null);
       }
     };
@@ -214,8 +212,7 @@ var GiftButton = (function(window, undefined) {
    * @param callback
    */
   function getGiftBoxData(callback){
-    var gbURL = window.location.href;
-    xhRequest('GET', psApiLocation + '/giftboxes/'+GiftButton.uuid +'?gbURL='+gbURL, null, function (error, data){
+    xhRequest('GET', psApiLocation + '/giftboxes/'+GiftButton.uuid, null, function (error, data){
       var hasError = !!error || data.status == 'inactive';
       if (hasError){
         callback(hasError);
@@ -231,37 +228,9 @@ var GiftButton = (function(window, undefined) {
       GiftButton.hasLogo = !!data.hasLogo;  // hasLogo
       GiftButton.externalUrl = data.externalUrl; // externalUrl
       GiftButton.locale = data.locale || 'ENG';
-      GiftButton.ctaText = data.ctaText || '';
-      GiftButton.thankYouMessage = data.thankYouMessage || '';
-      GiftButton.thankYouEvent = data.thankYouEvent || '';
-      GiftButton.thankYouFormat = data.thankYouFormat || '';
-      GiftButton.hasThankYou = GiftButton.thankYouEvent.length > 1;
-      GiftButton.numShowThankYou = data.numShowThankYou || 1;
 
       callback();
     });
-  }
-
-  function getGiftDataByIndex(index){
-    var giftData = {};
-    if (GiftButton.promotions.length == 0) {
-      showNoGiftsModal();
-      return;
-    }
-
-    giftData.promotionId = GiftButton.promotions[index].promotionId;
-    giftData.giftImageUrl = GiftButton.promotions[index].giftImageUrl;
-    giftData.giftName = GiftButton.promotions[index].giftName;
-    giftData.logoUrl = GiftButton.promotions[index].logoUrl;
-    giftData.giftId = GiftButton.promotions[index].giftId;
-    giftData.brandId = GiftButton.promotions[index].brandId;
-    giftData.musicMode = GiftButton.promotions[index].musicCode;
-    giftData._gc = getGiftCookie(GiftButton.data.promotionId);
-    if(GiftButton.cookies){
-      giftData._gc = GiftButton.cookies[index]._gc;
-      giftData.data._gct = GiftButton.cookies[index]._gct;
-    }
-    return giftData;
   }
 
   function setGiftByIndex(index){
@@ -344,12 +313,6 @@ var GiftButton = (function(window, undefined) {
   }
 
   function insertButtonProperTranslation(markup, callback){
-    if (GiftButton.ctaText.length > 1){
-      var ctaMarkup = markup.toString()
-        .replace(/@@buttonHoverTextLarge/g, GiftButton.ctaText);
-      callback(ctaMarkup);
-    }
-
     loadHTMLFile(serverLocation + serverPath +'/translations/'+GiftButton.locale+'.json', function (translationData){
       var translations = JSON.parse(translationData);
       GiftButton.translations = translations;
@@ -364,7 +327,6 @@ var GiftButton = (function(window, undefined) {
   function insertModalProperTranslation(markup){
     var translations = GiftButton.translations;
     return markup.toString()
-      .replace(/@@thankYouMessage/g, GiftButton.thankYouMessage)
       .replace(/@@modalNavigationBack/g, translations['modal']['navigation']['back'])
       .replace(/@@modalNavigationContinue/g, translations['modal']['navigation']['continue'])
       .replace(/@@modalNavigationNext/g, translations['modal']['navigation']['next'])
@@ -403,7 +365,8 @@ var GiftButton = (function(window, undefined) {
 
 
   function loadModalMarkup(callback){
-    var modalTemplateType = GiftButton.promotions.length > 1 ? 'multi-modal-redesign' : 'modal';
+
+    var modalTemplateType = 'side-modal';//GiftButton.promotions.length > 1 ? 'multi-modal' : 'modal';
     loadHTMLFile(serverLocation + serverPath +'/templates/' + modalTemplateType + '.html', function (htmlData){
 
       if (!GiftButton.hasLogo) {
@@ -411,18 +374,8 @@ var GiftButton = (function(window, undefined) {
         tree.find('.gButton-logo-component').remove();
         htmlData = tree.html();
       }
-      var markup = htmlData.toString();
-      if (GiftButton.promotions.length >= 1) {
-        var pMarkup = GiftButton.$(markup);
-        var promoLogosMarkup = '';
-        for (var i = 0; i < GiftButton.promotions.length; i++){
-          promoLogosMarkup += '<li><img src="'+GiftButton.promotions[i].logoUrl+'"/></li>';
-        }
-        pMarkup.find('.gButton-img-list').html(promoLogosMarkup);
-        markup = pMarkup.wrap('<p/>').parent().html();
-      }
 
-      markup = markup.toString()
+      var markup = htmlData.toString()
         .replace(/@@serverUrl/g, GiftButton.serverUrl.toString())
         .replace(/@@giftName/g, GiftButton.giftName.toString())
         .replace(/@@logoUrl/g, GiftButton.logoUrl.toString());
@@ -445,37 +398,38 @@ var GiftButton = (function(window, undefined) {
     });
   }
 
-  function appendModalMarkup(callback){
+  /**
+   *
+   * @param callback
+   * @param [elmClass]
+   */
+  function appendModalMarkup(callback, elmClass){
     loadModalMarkup(function (modalMarkup){
-      GiftButton.$('#gift-me').after(modalMarkup);
+      if(elmClass) GiftButton.$(elmClass).html(modalMarkup);
+      else GiftButton.$('#gift-me').after(modalMarkup);
       callback();
     });
   }
 
   function renderButton(){
     var btnTmplUrl = serverLocation + serverPath +  '/templates/';
-    if (GiftButton.hasThankYou){
-      btnTmplUrl += 'button-1px.html';
-    } else {
-      switch(GiftButton.size) {
-        case 'LARGE':
-          btnTmplUrl += 'button-l.html';
-          break;
-        case 'MEDIUM':
-          btnTmplUrl += 'button-m.html';
-          break;
-        case 'SMALL':
-          btnTmplUrl += 'button-s.html';
-          break;
-        case 'SIDE':
-          btnTmplUrl += 'button-side.html';
-          break;
-        default:
-          btnTmplUrl += 'button-l.html';
-          break;
-      }
+    switch(GiftButton.size) {
+      case 'LARGE':
+        btnTmplUrl += 'button-side.html';
+        break;
+      case 'MEDIUM':
+        btnTmplUrl += 'button-m.html';
+        break;
+      case 'SMALL':
+        btnTmplUrl += 'button-s.html';
+        break;
+      case 'SIDE':
+        btnTmplUrl += 'button-side.html';
+        break;
+      default:
+        btnTmplUrl += 'button-side.html';
+        break;
     }
-
 
     loadHTMLFile(btnTmplUrl, function (htmlData){
       var markup = htmlData.toString()
@@ -488,63 +442,36 @@ var GiftButton = (function(window, undefined) {
     });
   }
 
-  function setUpThankYou(){
-    switch(GiftButton.thankYouEvent){
-      case 'SCROLL':
-        addEvent(document, 'scroll', function(evt) {
-          if (evt.toElement == null && evt.relatedTarget == null) {
-            if (document.body.scrollHeight == document.body.scrollTop + window.innerHeight) {
-              GiftButton.handleScrollBottom();
-            }
-
-          }
-        });
-        break;
-      case 'LEAVE':
-        addEvent(document, 'mouseout', function(evt) {
-          if (evt.toElement == null && evt.relatedTarget == null) {
-            GiftButton.handleWindowLeave();
-          }
-        });
-        break;
-      case 'CUSTOM':
-        break;
-      case 'CUSTOM-EMAIL':
-        break;
-      default:
-        break;
+  GiftButton.toggleGiftModal = function (){
+    GiftButton.isOpen = !GiftButton.isOpen;
+    if (GiftButton.isOpen) {
+      GiftButton.hideSideModal();
+      return;
     }
-  }
-
-  GiftButton.handleScrollBottom = function(){
-    if (GiftButton.numShowThankYou > 0){
-      GiftButton.numShowThankYou--;
-      GiftButton.openGiftModal();
-    }
-
+    GiftButton.showSideModal();
   };
 
-  GiftButton.handleWindowLeave = function (){
-    if (GiftButton.numShowThankYou > 0) {
-      GiftButton.numShowThankYou--;
-      GiftButton.openGiftModal();
-    }
+  GiftButton.hideSideModal = function (){
+    GiftButton.$('.gButton-side-box').removeClass('active');
+    var elms = GiftButton.$('.gButton-list-content');
+    elms.remove();
   };
 
-  GiftButton.invokeGCModal = function (thankYouMessage, email){
+  GiftButton.showSideModal = function (callback){
+    GiftButton.promotions = GiftButton.copy(GiftButton.pms);
+    GiftButton.$('html').addClass('gButton-body');
+    trackButtonClick();
 
-    if (thankYouMessage){
-      GiftButton.thankYouMessage = thankYouMessage.toString();
-    }
-    if(GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && email.length > 0){
-      GiftButton.inputtedEmail = email;
-    }
-    GiftButton.openGiftModal();
+    appendModalMarkup(function (){
+      GiftButton.$('.gButton-side-box').addClass('active');
+      for (var i=0; i<GiftButton.promotions.length; i++){
+        var promo = GiftButton.promotions[i];
+        GiftButton.$('.gButton-list-content ul').append('<li><h4>'+promo.giftName+'</h4><div><img src="'+promo.giftImageUrl+'" width="80%"/></div></li>');
+      }
+    }, '.gButton-side-box');
   };
-
 
   GiftButton.openGiftModal = function (){
-    
     GiftButton.promotions = GiftButton.copy(GiftButton.pms);
     GiftButton.$('html').addClass('gButton-body');
     trackButtonClick();
@@ -554,13 +481,9 @@ var GiftButton = (function(window, undefined) {
     }
     appendModalMarkup(function (){
       GiftButton.promotions = GiftButton.copy(GiftButton.pms);
-      var allPromotionTpls = prepareAllPromotionTemplates(GiftButton.promotions);
-      GiftButton.$('.gButton-slider').html(allPromotionTpls);
-      setPromotionTplClasses();
       setTimeout(function (){
-        GiftButton.$('.gButton-slider > .current > .gButton-slide').css({'background-image': 'url(' + GiftButton.giftImageUrl + ')'});
+        GiftButton.$('.gButton-banner-module, .banner-module-portrait').css({'background-image': 'url(' + GiftButton.giftImageUrl + ')'});
         GiftButton.$('.gButton-box, .gButton-popup-overlay').addClass('popup-shown');
-        GiftButton.$('.gButton-slider-outer').addClass('in-view');
         addUILogic();
       },0);
 
@@ -569,136 +492,17 @@ var GiftButton = (function(window, undefined) {
         GiftButton.$('.gButton-box').css('top', scrollPos+'px');
       }
 
-      if(GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && GiftButton.inputtedEmail.length > 0){
-        GiftButton.$('.gButton-email-input').val(GiftButton.inputtedEmail);
-      }
-
       setTimeout(function (){
         if (window.matchMedia("(min-width: 501px)").matches) {
           GiftButton.$('.gButton-email-input').focus();
         }
       }, 100);
-
-      if(GiftButton.hasThankYou){
-        GiftButton.$('.gButton-entry').addClass('in-view');
-        setTimeout(function (){
-          GiftButton.$('.gButton-entry').removeClass('in-view');
-        }, 6000);
-      } else {
-        GiftButton.$('.gButton-thankyou-module').hide();
-      }
     });
 
   };
 
-  function loadGiftElementTemplate(){
-    loadHTMLFile(serverLocation + serverPath +'/templates/gift-element.html', function (htmlData){
-      GiftButton.giftTemplate = htmlData.toString();
-    });
-  }
-  
-  function prepareGiftTemplate(giftName, giftImageUrl, logoUrl){
-    var translations = GiftButton.translations;
-    var tpl = GiftButton.giftTemplate;
-    tpl = tpl.toString()
-      .replace(/@@thankYouMessage/g, GiftButton.thankYouMessage)
-      .replace(/@@modalNavigationBack/g, translations['modal']['navigation']['back'])
-      .replace(/@@modalNavigationContinue/g, translations['modal']['navigation']['continue'])
-      .replace(/@@modalNavigationNext/g, translations['modal']['navigation']['next'])
-      .replace(/@@modalExplainer/g, translations['modal']['explainer'])
-      .replace(/@@modalCongratulationsHeadline/g, translations['modal']['congratulations']['headline'])
-      .replace(/@@modalCongratulationsInstructions/g, translations['modal']['congratulations']['instructions'])
-      .replace(/@@modalCongratulationsEmail/g, translations['modal']['congratulations']['takeMeToMyEmail'])
-      .replace(/@@modalCongratulationsMoreGifts/g, translations['modal']['congratulations']['wantMoreGifts'])
-      .replace(/@@modalCongratulationsGreatGiftCode/g, translations['modal']['congratulations']['greatGiftCode'])
-      .replace(/@@modalCongratulationsClickToRedeem/g, translations['modal']['congratulations']['clickToRedeem'])
-      .replace(/@@modalCongratulationsGetMoreGifts/g, translations['modal']['congratulations']['getMoreGifts'])
-      .replace(/@@modalCongratulationsResend/g, translations['modal']['congratulations']['resend'])
-      .replace(/@@modalEmailFormHeadline/g, translations['modal']['emailForm']['headline'])
-      .replace(/@@modalEmailFormInvalidEmail/g, translations['modal']['emailForm']['invalidEmail'])
-      .replace(/@@modalEmailFormGiftedEmail/g, translations['modal']['emailForm']['giftedEmail'])
-      .replace(/@@modalEmailFormNoGifts/g, translations['modal']['emailForm']['noGifts'])
-      .replace(/@@modalGenderFormHeadline/g, translations['modal']['genderForm']['headline'])
-      .replace(/@@modalGenderFormOther/g, translations['modal']['genderForm']['other'])
-      .replace(/@@modalAgeFormHeadline/g, translations['modal']['ageForm']['headline'])
-      .replace(/@@serverUrl/g, GiftButton.serverUrl.toString())
-      .replace(/@@giftName/g, giftName)
-      .replace(/@@giftImageUrl/g, giftImageUrl)
-      .replace(/@@logoUrl/g, logoUrl);
-
-    return tpl;
-  }
-
-  function prepareAllPromotionTemplates(promos){
-    var totalTpls = '';
-    for (var i = 0; i<promos.length; i++){
-      var promo = promos[i];
-      totalTpls += prepareGiftTemplate(promo.giftName, promo.giftImageUrl, promo.logoUrl);
-    }
-    return totalTpls;
-  }
-
-  function setPromotionTplClasses(){
-    var allGiftElems = GiftButton.$('.gButton-slider li');
-
-    if (allGiftElems.length == 1){
-      GiftButton.$(allGiftElems[0]).addClass('current');
-      return;
-    }
-
-    if (allGiftElems.length == 2){
-      GiftButton.$(allGiftElems[0]).addClass('current');
-      GiftButton.$(allGiftElems[1]).addClass('next');
-      return;
-    }
-
-    if (allGiftElems.length == 3){
-      GiftButton.$(allGiftElems[0]).addClass('current');
-      GiftButton.$(allGiftElems[1]).addClass('next');
-      GiftButton.$(allGiftElems[2]).addClass('prev');
-      return;
-    }
-
-    if (allGiftElems.length > 3){
-      GiftButton.$(allGiftElems[0]).addClass('current');
-      GiftButton.$(allGiftElems[1]).addClass('next');
-      for(var i = 2; i<allGiftElems.length-1; i++){
-        GiftButton.$(allGiftElems[i]).addClass('inactive');
-      }
-      GiftButton.$(allGiftElems[allGiftElems.length-1]).addClass('prev');
-    }
-  }
-
   GiftButton.nextGift = function(){
     removeRedBottomError();
-
-
-    if (GiftButton.promotions.length == 2) {
-      GiftButton.$('.gButton-slider > .next').removeClass('next').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('prev active');
-      GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
-      GiftButton.$('.gButton-slider > .prev').removeClass('active');
-
-    } else if (GiftButton.promotions.length >= 3){
-
-      GiftButton.$('.gButton-slider .next').addClass('move-right');
-      GiftButton.$('.gButton-slider .current').addClass('move-right');
-      setTimeout(function(){
-        GiftButton.$('.gButton-slider .next').removeClass('next').addClass('current active').removeClass('move-right');
-        GiftButton.$('.gButton-slider .current').not('.active').removeClass('current').addClass('prev active').removeClass('move-right');
-        GiftButton.$('.gButton-slider .current').removeClass('active');
-        GiftButton.$('.gButton-slider > .prev').not('.active').removeClass('prev').addClass('inactive');
-        GiftButton.$('.gButton-slider > .prev').removeClass('active');
-
-        if (GiftButton.$('.gButton-slider > .current').next('li.inactive').length) {
-          GiftButton.$('.gButton-slider > .current').next('li.inactive').removeClass('inactive').addClass('next');
-        } else {
-          GiftButton.$('.gButton-slider > li.inactive:first').removeClass('inactive').addClass('next');
-        }
-      }, 500);
-    }
-
     if (GiftButton.$('.gButton-overlay').hasClass('show-congradulation')) removeCongratsModalMoreGifts();
     if (GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val()) {
       var inputEmailVal = GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val();
@@ -730,34 +534,6 @@ var GiftButton = (function(window, undefined) {
 
   GiftButton.previousGift = function (){
     removeRedBottomError();
-
-    if (GiftButton.promotions.length == 2) {
-      GiftButton.$('.gButton-slider > .prev').removeClass('prev').addClass('current active');
-      GiftButton.$('.gButton-slider > .current').not('.active').removeClass('current').addClass('next active');
-      GiftButton.$('.gButton-slider > .current').removeClass('active');
-      GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('inactive');
-      GiftButton.$('.gButton-slider > .next').removeClass('active');
-
-    } else if (GiftButton.promotions.length >= 3){
-      GiftButton.$('.gButton-slider .prev').addClass('move-left');
-      GiftButton.$('.gButton-slider .current').addClass('move-left');
-
-      setTimeout(function(){
-        GiftButton.$('.gButton-slider .prev').removeClass('prev').addClass('current active').removeClass('move-left');
-        GiftButton.$('.gButton-slider .current').not('.active').removeClass('current').addClass('next active').removeClass('move-left');
-        GiftButton.$('.gButton-slider .current').removeClass('active');
-        GiftButton.$('.gButton-slider > .next').not('.active').removeClass('next').addClass('inactive');
-        GiftButton.$('.gButton-slider > .next').removeClass('active');
-
-        if (GiftButton.$('.gButton-slider > .current').prev('li.inactive').length) {
-          GiftButton.$('.gButton-slider > .current').prev('li.inactive').removeClass('inactive').addClass('prev');
-        } else {
-          GiftButton.$('.gButton-slider > li.inactive:last').removeClass('inactive').addClass('prev');
-        }
-      }, 500);
-    }
-
-
     if (GiftButton.$('.gButton-overlay').hasClass('show-congradulation')) removeCongratsModalMoreGifts();
     if (GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val()) {
       var inputEmailVal = GiftButton.$('#klickpush_iframe').contents().find('#kp_email').val();
@@ -889,17 +665,16 @@ var GiftButton = (function(window, undefined) {
   }
 
   function showCongradulations(){
-
-    GiftButton.promotions = [GiftButton.promotions[0]];
-    if(GiftButton.promotions.length < 2){
-      GiftButton.$('.congrats-box .congrats-bottom').hide();
-    }
+    GiftButton.$('.gButton-congradulations-module').css('display', 'block');
     setTimeout(function () {
-      GiftButton.$('.gButton-slide').addClass('congrats-in-view');
+      GiftButton.$('.gButton-congradulations-module').addClass('show-congradulation');
     }, 20);
 
+    GiftButton.$('.gButton-overlay').addClass('show-congradulation');
+    GiftButton.$('.gButton-banner-module > .gButton-explainer-component').hide();
+
     if(GiftButton.promotions.length < 1){
-      //GiftButton.$('.gButton-prev-arrow, .gButton-next-arrow, .gButton-resend-email').hide();
+      //GiftButton.$('.gButton-prev-arrow, .gButton-next-arrow, .gButton-resend-email, .gButton-form-module').hide();
     }
   }
 
@@ -911,7 +686,7 @@ var GiftButton = (function(window, undefined) {
 
     var congModule = GiftButton.$('.gButton-congradulations-module');
     congModule.find('.gButton-main-headline').html(headlineText);
-    congModule.find('.congrats-box.gButton-entry > h4').html(descriptionText);
+    congModule.find('#gButton-congratulations-instructions').html(descriptionText);
 
     GiftButton.$('.gButton-banner-module > .gButton-explainer-component').hide();
 
@@ -926,7 +701,7 @@ var GiftButton = (function(window, undefined) {
   function resetNoGiftModifications() {
     var congModule = GiftButton.$('.gButton-congradulations-module');
     congModule.find('.gButton-main-headline').html(GiftButton.translations['modal']['congratulations']['greatGiftCode']);
-    congModule.find('.congrats-box.gButton-entry > h4').html(GiftButton.redeemLink);
+    congModule.find('#gButton-congratulations-instructions').html(GiftButton.redeemLink);
     GiftButton.$('.gButton-banner-module > .gButton-explainer-component').show();
     var sendEmailBtn = congModule.find('.gButton-to-email');
     sendEmailBtn.html(GiftButton.translations['modal']['congratulations']['clickToRedeem']);
@@ -953,7 +728,7 @@ var GiftButton = (function(window, undefined) {
     var imgSrc = congIcon.attr('src').replace('gift-icon', 'error-icon');
     congIcon.attr('src', imgSrc);
     congModule.find('.gButton-main-headline').html(headlineText);
-    congModule.find('.congrats-box.gButton-entry > h4').html(errorText);
+    congModule.find('#gButton-congratulations-instructions').html(errorText);
     GiftButton.$('.gButton-progress-component').css('background', '#F94F48');
 
     var sendEmailBtn = congModule.find('.gButton-to-email');
@@ -965,18 +740,13 @@ var GiftButton = (function(window, undefined) {
   }
 
   function resetCongratulations(){
-
-    if (GiftButton.promotions.length >= 2) {
-      GiftButton.$('.congrats-box .congrats-bottom').show();
-    }
-    GiftButton.$('.gButton-slide').removeClass('congrats-in-view');
-    /*showBannerComponents();
+    showBannerComponents();
     var congModule = GiftButton.$('.gButton-congradulations-module');
     var congIcon  = congModule.find('.gButton-congratulations-icon');
-    //var imgSrc = congIcon.attr('src').replace('error-icon', 'gift-icon');
-    //congIcon.attr('src', imgSrc);
+    var imgSrc = congIcon.attr('src').replace('error-icon', 'gift-icon');
+    congIcon.attr('src', imgSrc);
     congModule.find('.gButton-main-headline').html(GiftButton.translations['modal']['congratulations']['headline']);
-    congModule.find('.congrats-box.gButton-entry > h4').html(GiftButton.translations['modal']['congratulations']['instructions']);
+    congModule.find('#gButton-congratulations-instructions').html(GiftButton.translations['modal']['congratulations']['instructions']);
     GiftButton.$('.gButton-progress-component').removeAttr('style');
 
     GiftButton.progressBar.progCurrent = 0;
@@ -996,7 +766,7 @@ var GiftButton = (function(window, undefined) {
     GiftButton.$('.gButton-form-module .active').removeClass('active');
     GiftButton.$('.gButton-input-wrapper').first().addClass('active');
     congModule.hide();
-    GiftButton.$('.gButton-congradulations-module, .gButton-overlay').removeClass('show-congradulation');*/
+    GiftButton.$('.gButton-congradulations-module, .gButton-overlay').removeClass('show-congradulation');
   }
 
   GiftButton.keyUpEmailInput = function (e) {
@@ -1022,26 +792,26 @@ var GiftButton = (function(window, undefined) {
   };
 
   function showErrorMsg(){
-    var errElem = document.querySelector('.gButton-slide-content > fieldset');
-    var errClass = GiftButton.promotions.length > 1 ? 'has-error' : 'has-error';
+    var errElem = document.querySelector('.gButton-error-msg.invalid-email');
+    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
     addClass(errElem, errClass);
   }
 
   function removeErrorMsg(){
-    var errElem = document.querySelector('.gButton-slide-content > fieldset');
-    var errClass = GiftButton.promotions.length > 1 ? 'has-error' : 'has-error';
+    var errElem = document.querySelector('.gButton-error-msg.invalid-email');
+    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
     removeClass(errElem, errClass);
   }
 
   function showRedBottomError(errorCode){
-    var errElem = errorCode == 2009 ? document.querySelector('.gifted-email') : document.querySelector('.no-gifts');
-    var errClass = GiftButton.promotions.length > 1 ? 'show-error' : 'show-error';
+    var errElem = errorCode == 2009 ? document.querySelector('.gButton-error-msg.gifted-email') : document.querySelector('.gButton-error-msg.no-gifts');
+    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
     addClass(errElem, errClass);
   }
 
   function removeRedBottomError(){
     //var errElem = document.querySelector('.gButton-error-msg');
-    var errClass = GiftButton.promotions.length > 1 ? 'show-error' : 'show-error';
+    var errClass = GiftButton.promotions.length > 1 ? 'show-error-multi' : 'show-error';
     GiftButton.$('.gButton-error-msg').removeClass(errClass);
   }
 
@@ -1059,39 +829,42 @@ var GiftButton = (function(window, undefined) {
       el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
   }
 
-  function addUILogic() {
+  function addUILogic(){
     GiftButton.progressBar.formSteps = GiftButton.$('.gButton-box').first().find('.gButton-input-wrapper').length;
     GiftButton.progressBar.progPortion = 100 / GiftButton.progressBar.formSteps;
 
-    GiftButton.$('.gButton-banner-module').on('mouseenter', function () {
+    GiftButton.$('.gButton-banner-module').on('mouseenter', function(){
       removeBannerComponents();
       if (!GiftButton.promotions.length > 1) GiftButton.$('.gButton-overlay').addClass('remove-from-view');
-    }).on('mouseleave', function () {
+    }).on('mouseleave', function(){
       if (GiftButton.progressBar.progCurrent < 100) {
         showBannerComponents();
         if (!GiftButton.promotions.length > 1) GiftButton.$('.gButton-overlay').removeClass('remove-from-view');
       }
     });
 
-
 // REMOVE ERRORS ON INPUT
-    GiftButton.$('.gButton-email-input').on('input', function () {
+    GiftButton.$('.gButton-email-input').on('input', function(){
       removeErrorMsg();
       removeRedBottomError();
     });
 
-  }
 
-    GiftButton.getGift = function(){
-      var inputEmail = GiftButton.$('.gButton-gift-email-input').val();
+    //TODO: Refactor each function to each of the buttons
+    GiftButton.$('.gButton-next-step, .gButton-gender-choice, .gButton-age-select li, .gButton-navigation-continue, .gButton-get-gift').on('click', function(e){
+      e.preventDefault();
 
-      if(!isEmail(inputEmail)) {
+      var inputedEmail = GiftButton.$('.gButton-email-input').val();
+
+      if( !isEmail( inputedEmail ) ) {
         showErrorMsg();
-      } else {
-        GiftButton.data.email = inputEmail;
+      }
+      else{
+        GiftButton.data.email = inputedEmail;
 
         if (GiftButton.module == 'E'){
           sendGatheredData(function (error, response){
+
             if(error != null ){
               error = error.error ? error.error : error;
               if (error.code && error.code == '2009') {
@@ -1110,17 +883,80 @@ var GiftButton = (function(window, undefined) {
             } else {
               GiftButton.redeemLink = response.redeemLink;
               GiftButton.giftCode = response.giftCode;
-              GiftButton.$('.gButton-slide > .congrats-box > p').html(GiftButton.giftCode);
+              GiftButton.$('#gButton-congratulations-instructions').html(GiftButton.giftCode);
             }
 
+            if (GiftButton.promotions.length > 1){
+              GiftButton.$('.gButton-input-wrapper').removeClass('active');
+              GiftButton.$('.gButton-explainer-component').hide();
+            } else {
+              GiftButton.progressBar.progCurrent = 100;
+              GiftButton.$('.gButton-form-module .active').removeClass('active');
+              GiftButton.$('.gButton-progress-component').animate({
+                width: '100%'
+              }, 500, 'easeOutBounce');
+              GiftButton.$('.gButton-prev-arrow, .gButton-resend-email, .gButton-next-arrow').hide();
+            }
+
+            removeBannerComponents();
+            showCongradulations();
+          });
+          return;
+        }
+        var targetElm = GiftButton.$(e.target);
+        if (targetElm.hasClass('gender-choice')) {
+          GiftButton.data.gender = targetElm.attr('data-gender');
+        }
+        if(targetElm.parent().hasClass('gButton-age-select')){
+          GiftButton.data.age = targetElm.text();
+
+        }
+        GiftButton.progressBar.progCurrent = GiftButton.progressBar.progCurrent + GiftButton.progressBar.progPortion;
+
+        if (GiftButton.progressBar.progCurrent === 100 || GiftButton.promotions.length > 1) {
+          sendGatheredData(function (error, response){
+            if( error != null ){
+              error = error.error ? error.error : error;
+              if (error.code && error.code == '2009') {
+                showRedBottomError(2009);
+                return;
+              } else if(error.messages && error.messages[0].indexOf('gift code not issued') != -1) {
+                showErrorModal(GiftButton.translations['modal']['issuingError']);
+              } else if (error.code && error.code == '2006'){
+                showRedBottomError(2006);
+                return;
+              } else {
+                showErrorModal(GiftButton.translations['modal']['issuingError']);
+              }
+              return;
+            } else {
+              GiftButton.redeemLink = response.redeemLink;
+              GiftButton.giftCode = response.giftCode;
+              GiftButton.$('#gButton-congratulations-instructions').html(GiftButton.giftCode);
+            }
+
+            GiftButton.$('.gButton-form-module .active').removeClass('active').next('.gButton-input-wrapper').addClass('active');
+            if (GiftButton.promotions.length > 1){
+              GiftButton.$('.gButton-input-wrapper').removeClass('active');
+            } else {
+              GiftButton.$('.gButton-prev-arrow, .gButton-next-arrow').hide();
+            }
+            removeBannerComponents();
             showCongradulations();
           });
         }
+
+
+
+
+
+        var progCurrent = GiftButton.progressBar.progCurrent;
+        GiftButton.$('.gButton-progress-component').animate({
+          width: progCurrent+'%'
+        }, 500, 'easeOutBounce');
       }
-    };
-
-
-    
+    });
+  }
 
   GiftButton.goBack = function (){
     GiftButton.$('.gButton-form-module .active').removeClass('active').prev('.gButton-input-wrapper').addClass('active');
@@ -1169,11 +1005,9 @@ var GiftButton = (function(window, undefined) {
     GiftButton.$('.gButton-prev-arrow, .gButton-next-arrow, .gButton-resend-email, .gButton-form-module').show();
     GiftButton.$('html').removeClass('gButton-body');
     clearInterval(GiftButton.checker);
+    resetCongratulations();
     var elms = GiftButton.$('.gButton-box, .gButton-popup-overlay');
     elms.removeClass('popup-shown');
-    setTimeout(function(){
-      resetCongratulations();
-    }, 0);
     GiftButton.progressBar = {
       formSteps: 0,
       progPortion: 0,
@@ -1194,7 +1028,6 @@ var GiftButton = (function(window, undefined) {
   loadSupportingFiles(function() {
     var params = getButtonParams();
     GiftButton.uuid = params.uuid; // uuid
-    GiftButton.thankYouEvent = params.t; // uuid
 
     getGiftBoxData(function (hasError){
       if (hasError) {
@@ -1202,9 +1035,6 @@ var GiftButton = (function(window, undefined) {
         return;
       }
 
-      if (GiftButton.hasThankYou){
-        setUpThankYou();
-      }
       renderButton();
       trackButtonImpression();
     });
@@ -1212,16 +1042,3 @@ var GiftButton = (function(window, undefined) {
 
   return GiftButton;
 })(window);
-
-
-function _gcGBCustomInvoke(){
-  if (GiftButton.thankYouEvent == 'CUSTOM' && arguments.length == 1
-    && typeof arguments[0] == 'string'){
-    GiftButton.invokeGCModal(arguments[0]);
-  } else if (GiftButton.thankYouEvent == 'CUSTOM-EMAIL' && arguments.length == 1
-    && typeof arguments[0] == 'string' && typeof arguments[1] == 'string'){
-    GiftButton.invokeGCModal(arguments[0], arguments[1]);
-  } else {
-    GiftButton.invokeGCModal();
-  }
-}

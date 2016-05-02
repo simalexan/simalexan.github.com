@@ -1,55 +1,66 @@
-<div>
-  <div class="gButton-box gButton-new-box popup-shown">
 
-    <div class="gButton-central gButton-entry white"> <!-- Add class 'in-view' to show it -->
-      <h5>Thanks for signing up</h5>
-      <img class="thank-you-img" src="https://stage-ps.giftconnect.com/gbtn/img/gift-icon.svg" alt="">
-      <div class="gButton-brand-list">
-        <h4>Enjoy gifts from</h4>
-        <ul class="gButton-img-list">
-          <li><img src="img/nestle-logo.png" alt="Nesle"></li>
-          <li><img src="img/mcdonalds-logo.png" alt="Nesle"></li>
-          <li><img src="img/amazon-logo.png" alt="Nesle"></li>
-          <li><img src="img/hellofresh-logo.png" alt="Nesle"></li>
-        </ul>
-      </div>
-      <p class="gButton-powered">powered by GiftConnect</p>
-    </div><!-- / Initial white box -->
-
-    <div class="gButton-slider-outer"> <!-- Add class 'in-view' to show it -->
-
-      <ul class="gButton-slider">
-        <li class="current">
-          <img src="@@logoUrl" alt="" class="brand-logo">
-          <div class="gButton-slide" style="background-image:url(@@giftImageUrl);">
-            <!-- Add class 'congrats-in-view' to show Congrats box -->
-            <div class="gButton-slide-content gButton-entry">
-              <h6>@@modalExplainer</h6>
-              <h4>@@giftName</h4>
-              <fieldset>
-                <input type="text" placeholder="Your Email" class="gButton-gift-email-input"
-                       onkeyup="GiftButton.keyUpEmailInput(event)"
-                       onfocus="GiftButton.emailInputFocus(event)"
-                       onblur="GiftButton.emailInputBlur(event)">
-                <button onclick="GiftButton.getGift()">Take this gift</button>
-                <span class="error invalid-email">@@modalEmailFormInvalidEmail</span>
-                <div class="error gifted-email">@@modalEmailFormGiftedEmail</div>
-                <div class="error no-gifts">@@modalEmailFormNoGifts</div>
-              </fieldset>
-            </div>
-            <div class="congrats-box gButton-entry">
-              <h4>Congratulations!<br>
-                Your gift code is:</h4>
-              <p>238798743</p>
-              <a class="btn" onclick="GiftButton.openRedeemLink()">@@modalCongratulationsClickToRedeem</a>
-              <a class="congrats-bottom" onclick="GiftButton.getMoreGifts()">@@modalCongratulationsGetMoreGifts</a>
-            </div>
-          </div>
-        </li>
-      </ul>
-
+<div class="gButton-box">
+  <section class="gButton-banner-module">
+    <img class="gButton-close" src="@@serverUrl/img/close.png" alt="" onclick="GiftButton.closeGiftModal()">
+    <div class="gButton-overlay"></div>
+    <div class="gButton-explainer-component">
+      <h1 class="gButton-main-headline">@@modalExplainer <br><span> @@giftName</span></h1>
     </div>
+    <div class="gButton-logo-component text-center"><img src="@@logoUrl" alt="" width="100px"></div>
 
-  </div><!-- / Box outer wrapper -->
-  <div class="gButton-popup-overlay popup-shown" onclick="GiftButton.closeGiftModal()"></div>
+    <div class="gButton-congradulations-module">
+      <img class="gButton-congratulations-icon" src="@@serverUrl/img/gift-icon.svg" alt="">
+      <h1 class="gButton-main-headline">@@modalCongratulationsGreatGiftCode</h1>
+      <h3 id="gButton-congratulations-instructions"></h3>
+      <a class="gButton-to-email" onclick="GiftButton.openRedeemLink()">@@modalCongratulationsClickToRedeem</a>
+      <a class="gButton-resend-email" href=""></a>
+    </div>
+  </section>
+
+  <section class="gButton-form-module">
+    <form action="">
+      <div class="gButton-progress-component"></div>
+      <div class="gButton-input-wrapper active">
+        <h2 class="gButton-form-headline">@@modalEmailFormHeadline</h2>
+        <input class="gButton-email-input" type="email" placeholder="myemail@email.com">
+        <button class="gButton-next-step">@@modalNavigationNext</button>
+        <div class="gButton-error-msg invalid-email">@@modalEmailFormInvalidEmail</div>
+        <div class="gButton-error-msg gifted-email">@@modalEmailFormGiftedEmail</div>
+        <div class="gButton-navigation gButton-navigation-continue">
+          @@modalNavigationContinue
+          <img class="gButton-continue-icon" src="@@serverUrl/img/continue.svg" alt="">
+        </div>
+      </div>
+
+      <div class="gButton-input-wrapper">
+        <h2 class="gButton-form-headline">@@modalGenderFormHeadline</h2>
+        <div class="gender-select cf">
+          <a class="gButton-gender-choice gButton-boy" href="#" data-gender="male"></a>
+          <a class="gButton-gender-choice gButton-girl" href="#" data-gender="female"></a>
+          <a class="gButton-gender-choice gButton-other" href="#" data-gender="other">@@modalGenderFormOther</a>
+        </div>
+        <div class="gButton-navigation gButton-navigation-back" onclick="GiftButton.goBack()">
+            <img class="gButton-back-icon" src="@@serverUrl/img/back.svg" alt="">
+          @@modalNavigationBack
+         </div>
+      </div>
+
+      <div class="gButton-input-wrapper">
+        <h2 class="gButton-form-headline">@@modalAgeFormHeadline</h2>
+        <ul class="gButton-age-select">
+          <li>12-17</li>
+          <li>18-24</li>
+          <li>25-34</li>
+          <li>35-54</li>
+          <li>55+</li>
+        </ul>
+        <div class="gButton-navigation gButton-navigation-back" onclick="GiftButton.goBack()">
+          <img class="gButton-back-icon" src="@@serverUrl/img/back.svg" alt="">
+          @@modalNavigationBack
+        </div>
+      </div>
+    </form>
+  </section>
 </div>
+
+<div class="gButton-popup-overlay" onclick="GiftButton.closeGiftModal()"></div>
